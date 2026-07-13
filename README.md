@@ -14,21 +14,26 @@ installs a complete TDE desktop while:
 
 - **Dropping legacy/no-longer-needed components:**
   `kfloppy` (floppy disk formatter), `k3b` (optical disc burning),
-  `cervisia`/CVS support, `lisa`/`kpf` (legacy LAN file/network discovery),
-  `tdebindings` (dev-only language bindings), and similar cruft.
+  `cervisia`/CVS support and the rest of the `tdesdk` dev-tools module,
+  `lisa`/`kpf` (legacy LAN file/network discovery), `tdebindings`
+  (dev-only language bindings), and similar cruft.
 - **Not forcing the Redmond look-and-feel** — ships TDE's own stock defaults.
 - **Not depending on the stock metapackages** — `tde-refresh-trinity` stands
   entirely on its own; it can be installed without pulling in any of
   `tde-trinity`'s or the `redmond-default-settings(-ii)-trinity` packages'
   dependencies.
 - **Adding modern-stack integration** the stock packages lack: `plymouth`
-  (boot splash), `pipewire-audio`, `xsettingsd`, `xdg-desktop-portal-trinity`,
+  (boot splash), `pipewire-audio`, `xsettingsd`, `xdg-desktop-portal-tde`,
   `polkitd` + `pkexec` + `polkit-agent-tde`, `tdesudo`, `network-manager` +
   `network-manager-tde`, `tdebluez-trinity`, `tde-ebook-reader`, and
-  `kdbusnotication-trinity`.
+  `kdbusnotification-trinity`.
 - Demoting bulky-but-optional pieces (`tdegames-trinity`, `tdetoys-trinity`,
-  `dolphin-trinity`, `koffice-trinity`) to `Recommends`, and niche dev tools
+  `dolphin-trinity`, `koffice-trinity`) and hardware/preference-specific
+  pieces (`plymouth`, `plymouth-themes`, `tdebluez-trinity`,
+  `tde-ebook-reader`) to `Recommends`, and niche dev tools
   (`tdewebdev-trinity`) to `Suggests`, rather than hard `Depends`.
+  `Recommends` are still installed by default by apt, but can be removed
+  without removing the metapackage.
 
 ## Building
 
@@ -38,21 +43,17 @@ dpkg-buildpackage -us -uc
 
 ## Known caveats
 
-This packaging was authored without live access to the Debian/TDE trixie
-archive (the sandbox this was built in has no route to
-trinitydesktop.org / packages.debian.org / salsa.debian.org). The dependency
-list is best-effort based on TDE's known module structure. In particular,
-the following package names have **not** been verified against the real
-trixie archive and may need correcting once tested against a system with
-the TDE trixie repo enabled:
+Most dependency names have been checked against TDE's published changelogs
+and documentation (`xdg-desktop-portal-tde`, `polkit-agent-tde`,
+`network-manager-tde`, `tdebluez-trinity`, `tde-ebook-reader`,
+`kdbusnotification-trinity`), but the following have **not** yet been
+verified against the real trixie archive and may need correcting once
+tested against a system with the TDE trixie repo enabled:
 
-- `xdg-desktop-portal-trinity`
-- `polkit-agent-tde`
-- `tdesudo`
-- `network-manager-tde`
-- `tdebluez-trinity`
-- `tde-ebook-reader`
-- `kdbusnotication-trinity`
+- `tdesudo` (the app exists upstream; the binary package may be named
+  `tdesudo-trinity`)
 
-If any of these don't exist or are named differently, update
+The CI workflow in `.github/workflows/build.yml` dry-run installs the built
+package against the live TDE trixie apt repository, so a green build means
+every dependency name resolves. If any name is wrong, update
 `debian/control` accordingly.
