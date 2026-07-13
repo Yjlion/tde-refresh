@@ -1,0 +1,6 @@
+tde-refresh-trinity (1.0-1) trixie; urgency=medium
+
+  * Initial release: curated full-TDE metapackage, independent of the
+    stock tde-trinity / redmond-default-settings(-ii)-trinity packages.
+
+ -- yjlion <yjlion@gmail.com>  Mon, 13 Jul 2026 20:43:45 +0000

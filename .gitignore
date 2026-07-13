@@ -1,0 +1,5 @@
+/debian/.debhelper/
+/debian/tde-refresh-trinity/
+/debian/*.substvars
+/debian/files
+/debian/debhelper-build-stamp
