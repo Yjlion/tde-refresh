@@ -31,7 +31,7 @@ Depends:
  polkitd,
  pkexec,
  polkit-agent-tde,
- tdesudo,
+ tdesudo-trinity,
  network-manager,
  network-manager-tde,
  kdbusnotification-trinity,
