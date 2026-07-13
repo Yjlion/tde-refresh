@@ -1,4 +1,4 @@
-tde-refresh-trinity (1.0-1) trixie; urgency=medium
+tde-refresh-trinity (1.0) trixie; urgency=medium
 
   * Initial release: curated full-TDE metapackage, independent of the
     stock tde-trinity / redmond-default-settings(-ii)-trinity packages.

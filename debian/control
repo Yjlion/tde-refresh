@@ -1,10 +1,13 @@
 Source: tde-refresh-trinity
-Section: x11
+Section: metapackages
 Priority: optional
 Maintainer: yjlion <yjlion@gmail.com>
 Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
+Homepage: https://trinitydesktop.org/
+Vcs-Git: https://github.com/yjlion/tde-refresh.git
+Vcs-Browser: https://github.com/yjlion/tde-refresh
 
 Package: tde-refresh-trinity
 Architecture: all
@@ -21,24 +24,23 @@ Depends:
  tdepim-trinity,
  tdeaccessibility-trinity,
  tdeutils-trinity,
- tdesdk-trinity,
  tdm-trinity,
- plymouth,
- plymouth-themes,
  pipewire-audio,
  xsettingsd,
- xdg-desktop-portal-trinity,
+ xdg-desktop-portal-tde,
  polkitd,
  pkexec,
  polkit-agent-tde,
  tdesudo,
  network-manager,
  network-manager-tde,
- tdebluez-trinity,
- tde-ebook-reader,
- kdbusnotication-trinity,
+ kdbusnotification-trinity,
  ${misc:Depends}
 Recommends:
+ plymouth,
+ plymouth-themes,
+ tdebluez-trinity,
+ tde-ebook-reader,
  dolphin-trinity,
  koffice-trinity,
  tdegames-trinity,
@@ -52,13 +54,14 @@ Description: Full Trinity Desktop Environment, curated (metapackage)
  redmond-default-settings-ii-trinity metapackages.
  .
  Compared to the stock metapackages, this package:
-  - drops legacy/no-longer-needed components (kfloppy, k3b, cvs/cervisia,
-    lisa/kpf network discovery, tdebindings, and similar cruft)
+  - drops legacy/no-longer-needed components (kfloppy, k3b, cvs/cervisia
+    and the rest of the tdesdk dev-tools module, lisa/kpf network
+    discovery, tdebindings, and similar cruft)
   - does not force the "Redmond" Windows-like default look-and-feel
   - adds modern desktop-stack integration: plymouth, pipewire-audio,
-    xsettingsd, xdg-desktop-portal-trinity, polkitd/polkit-agent-tde,
+    xsettingsd, xdg-desktop-portal-tde, polkitd/polkit-agent-tde,
     tdesudo, network-manager/network-manager-tde, tdebluez-trinity,
-    tde-ebook-reader and kdbusnotication-trinity
+    tde-ebook-reader and kdbusnotification-trinity
  .
  This package intentionally does not depend on the stock tde-trinity or
  redmond-default-settings(-ii)-trinity packages, so it can be installed

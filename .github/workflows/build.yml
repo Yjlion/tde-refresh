@@ -1,0 +1,55 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build package
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends debhelper lintian
+
+      - name: Build
+        run: |
+          dpkg-buildpackage -us -uc
+          mkdir out
+          mv ../tde-refresh-trinity_* out/
+
+      - name: Lintian
+        run: lintian out/*.changes
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deb
+          path: out/*.deb
+
+  dep-check:
+    name: Dependencies resolve against TDE trixie repo
+    needs: build
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: deb
+
+      - name: Enable TDE trixie repository
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends wget ca-certificates
+          wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb
+          dpkg -i trinity-keyring.deb
+          echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-r14.1.x trixie main deps" \
+            > /etc/apt/sources.list.d/tde.list
+          apt-get update
+
+      - name: Dry-run install (verifies every dependency name resolves)
+        run: apt-get install -s ./tde-refresh-trinity_*_all.deb
