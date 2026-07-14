@@ -27,7 +27,7 @@ Depends:
  tdm-trinity,
  pipewire-audio,
  xsettingsd,
- xdg-desktop-portal-tde,
+ xdg-desktop-portal-trinity,
  polkitd,
  pkexec,
  polkit-agent-tde,
@@ -59,7 +59,7 @@ Description: Full Trinity Desktop Environment, curated (metapackage)
     discovery, tdebindings, and similar cruft)
   - does not force the "Redmond" Windows-like default look-and-feel
   - adds modern desktop-stack integration: plymouth, pipewire-audio,
-    xsettingsd, xdg-desktop-portal-tde, polkitd/polkit-agent-tde,
+    xsettingsd, xdg-desktop-portal-trinity, polkitd/polkit-agent-tde,
     tdesudo, network-manager/network-manager-tde, tdebluez-trinity,
     tde-ebook-reader and kdbusnotification-trinity
  .
