@@ -1,3 +1,17 @@
+tde-refresh-trinity (1.1) trixie; urgency=medium
+
+  * Restructure dependencies for a more granular, less forceful install:
+    - Drop the monolithic module Depends: tdeadmin-trinity,
+      tdegraphics-trinity, tdemultimedia-trinity, tdenetwork-trinity,
+      tdepim-trinity and tdeutils-trinity.
+    - Pull in a curated set of the individual applications and TDEIO/file
+      plugins those modules contained as Recommends instead, so users can
+      drop individual apps without fighting module-level dependencies.
+    - Move tdeedu-trinity, tdeio-apt-trinity and synaptic-trinity to
+      Suggests.
+
+ -- yjlion <yjlion@gmail.com>  Tue, 14 Jul 2026 22:04:28 -0400
+
 tde-refresh-trinity (1.0) trixie; urgency=medium
 
   * Initial release: curated full-TDE metapackage, independent of the
