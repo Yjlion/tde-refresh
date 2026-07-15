@@ -105,7 +105,9 @@ Recommends:
  tde-style-lipstik-trinity,
  tdeaddons-tdefile-plugins-trinity,
  kaddressbook-plugins-trinity,
- fonts-noto
+ fonts-noto,
+ xdg-user-dirs-gtk,
+ gnuplot-nox
 Suggests:
  tdewebdev-trinity,
  tdeedu-trinity,
