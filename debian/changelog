@@ -1,8 +1,9 @@
 tde-refresh-trinity (1.2) trixie; urgency=medium
 
   * Recommend xdg-user-dirs-gtk (creates the standard XDG user directories),
-    gnuplot-nox (plotting backend for qalculate/kmplot) and tdmtheme-trinity
-    (TDM login theme manager).
+    gnuplot-nox (plotting backend for qalculate/kmplot), tdmtheme-trinity
+    (TDM login theme manager) and desktop-base-trinity (default desktop
+    artwork/branding).
 
  -- yjlion <yjlion@gmail.com>  Tue, 14 Jul 2026 23:57:12 -0400
 

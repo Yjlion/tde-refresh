@@ -108,7 +108,8 @@ Recommends:
  fonts-noto,
  xdg-user-dirs-gtk,
  gnuplot-nox,
- tdmtheme-trinity
+ tdmtheme-trinity,
+ desktop-base-trinity
 Suggests:
  tdewebdev-trinity,
  tdeedu-trinity,
