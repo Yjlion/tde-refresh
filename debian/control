@@ -107,7 +107,8 @@ Recommends:
  kaddressbook-plugins-trinity,
  fonts-noto,
  xdg-user-dirs-gtk,
- gnuplot-nox
+ gnuplot-nox,
+ tdmtheme-trinity
 Suggests:
  tdewebdev-trinity,
  tdeedu-trinity,
