@@ -1,0 +1,39 @@
+name: release
+
+# Build the .deb and publish it as a downloadable GitHub Release asset
+# whenever a version tag (e.g. v1.1) is pushed.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish .deb
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends build-essential debhelper lintian
+
+      - name: Build
+        run: |
+          dpkg-buildpackage -us -uc
+          mkdir out
+          mv ../tde-refresh-trinity_* out/
+
+      - name: Lintian
+        run: lintian out/*.changes
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.deb
+          generate_release_notes: true
