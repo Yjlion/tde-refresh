@@ -1,0 +1,7 @@
+[KdmGreeterTheme]
+Encoding=UTF-8
+Greeter=chicago95.xml
+Name=Chicago95
+Description=Windows 9x style TDM theme: teal desktop and a grey bevelled logon window
+Author=tde-refresh, layout based on the MoreBlue Orbit KDM theme by Fathi Boudra
+Copyright=(c) 2008 Fathi Boudra <fabo@debian.org>, Debian Desktop Team

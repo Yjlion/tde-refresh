@@ -1,0 +1,11 @@
+[KSplash Theme: chicago95]
+Name = Chicago95
+Description = Windows 9x style KSplash theme using the Default engine
+Version = 1.0
+Author = tde-refresh, layout based on the Debian MoreBlue theme by Fathi Boudra
+Homepage = https://github.com/Yjlion/tde-refresh
+Engine = Default
+
+Icons Flashing = true
+Always Show Progress = false
+Label Foreground = #000000

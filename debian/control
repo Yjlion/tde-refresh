@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: yjlion <yjlion@gmail.com>
 Build-Depends: debhelper-compat (= 13),
  desktop-base (>= 13),
+ fonts-dejavu-core,
  librsvg2-bin
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
@@ -113,6 +114,7 @@ Recommends:
  tdmtheme-trinity,
  tde-refresh-desktop-base-trinity
 Suggests:
+ tde-refresh-win9x-trinity,
  tdewebdev-trinity,
  tdeedu-trinity,
  tdeio-apt-trinity,
@@ -134,6 +136,7 @@ Description: Full Trinity Desktop Environment, curated (metapackage)
     tde-ebook-reader and kdbusnotification-trinity
   - recommends tde-refresh-desktop-base-trinity (Ceratopsian TDE theme)
     instead of the Debian 5/6-era desktop-base-trinity
+  - suggests tde-refresh-win9x-trinity (optional Windows 9x themes)
  .
  This package intentionally does not depend on the stock tde-trinity or
  redmond-default-settings(-ii)-trinity packages, so it can be installed
@@ -159,3 +162,30 @@ Description: Ceratopsian theme for the Trinity Desktop Environment
  the real desktop-base instead of conflicting with and replacing it. It also
  ships the TDE default profile (wallpaper, splash theme) and the kompmgr/
  compton-tde compositor settings.
+
+Package: tde-refresh-win9x-trinity
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ tdebase-trinity,
+ tdelibs-trinity,
+ tdm-trinity,
+ ksplash-trinity,
+ ${misc:Depends}
+Recommends:
+ gtk2-engines-pixbuf,
+ plymouth
+Description: Windows 9x look for the Trinity Desktop Environment
+ Two ready-to-apply themes for the TDE Theme Manager (Control Center,
+ Appearance & Themes):
+  - Chicago95: Windows 95 look with the Chicago95 icons, cursors, sounds,
+    colour scheme and wallpapers
+  - Win9x: the same colour scheme, Redmond window decoration and Windows
+    widget style, but keeping TDE's own icons and cursors
+ .
+ It also installs Chicago95 GTK2/GTK3 themes, KSplash and TDM themes, an
+ optional Chicago95 Plymouth theme and the tde-win9x-panel helper that gives
+ the panel a labelled Start button. Nothing is activated automatically.
+ .
+ Artwork comes from the Chicago95 project; TDE settings follow the layout of
+ the redmond-default-settings-ii-trinity package, without its dependencies.

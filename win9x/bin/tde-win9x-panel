@@ -1,0 +1,24 @@
+#!/bin/sh
+# Give the TDE panel (kicker) a Windows 9x layout: a labelled "Start" button.
+# The TDE Theme Manager cannot set these keys, so the Win9x/Chicago95 themes
+# leave them to this helper.  Usage: tde-win9x-panel [apply|revert]
+set -e
+PATH=/opt/trinity/bin:$PATH
+case "${1:-apply}" in
+apply)
+	kwriteconfig --file kickerrc --group KMenu --key ShowText true
+	kwriteconfig --file kickerrc --group KMenu --key Text Start
+	kwriteconfig --file kickerrc --group buttons --key Font "Sans Serif,8,-1,5,75,0,0,0,0,0"
+	kwriteconfig --file kickerrc --group General --key ShowIconActivationEffect false
+	;;
+revert)
+	kwriteconfig --file kickerrc --group KMenu --key ShowText false
+	kwriteconfig --file kickerrc --group KMenu --key Text ""
+	kwriteconfig --file kickerrc --group General --key ShowIconActivationEffect true
+	;;
+*)
+	echo "usage: ${0##*/} [apply|revert]" >&2
+	exit 1
+	;;
+esac
+dcop kicker kicker restart >/dev/null 2>&1 || true
