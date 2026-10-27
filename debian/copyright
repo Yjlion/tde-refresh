@@ -36,7 +36,8 @@ Copyright: Chicago95 contributors (see win9x/chicago95/CREDITS)
 License: GPL-3+ or MIT
 Comment: Trimmed copy of https://github.com/grassmunk/Chicago95 at the commit
  recorded in win9x/chicago95/UPSTREAM_COMMIT. Chicago95 is licensed
- GPL-3.0+/MIT. The Plymouth images, sounds and Windows 95 style art imitate
+ GPL-3.0+/MIT. Only the Tux icon variant and the RetroTux Plymouth theme are
+ included (no Windows logo). The sounds and Windows 95 style art imitate
  Microsoft products; Microsoft's own rights in them are not granted by this
  package.
 

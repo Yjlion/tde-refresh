@@ -7,7 +7,7 @@ Captured in a `debian:trixie` Docker container with the TDE trixie repo,
 | File | What it shows |
 | --- | --- |
 | `desktop.png` | TDE session started with only the package's `/etc/trinity` profile: Ceratopsian wallpaper from `desktop-base`'s SVG, rendered at build time. |
-| `win9x-chicago95-desktop.png` | After applying the **Chicago95** theme in the Theme Manager, plus `tde-win9x-panel`: teal desktop, Chicago95 icons, Start button. |
+| `win9x-chicago95-desktop.png` | After applying the **Chicago95** theme in the Theme Manager, plus `tde-win9x-panel`: teal desktop, Chicago95 Tux icons, Tux Start button. |
 | `win9x-chicago95-theme-manager.png` | The Theme Manager with the Chicago95 theme applied (Windows widget style, Redmond decoration). |
 | `win9x-tde-icons-desktop.png` | After applying the **Win9x** theme: same layout and colours, TDE's own icons. |
 | `win9x-tde-icons-theme-manager.png` | The Theme Manager listing the Win9x theme. |

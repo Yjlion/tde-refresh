@@ -48,13 +48,15 @@ override_dh_auto_install:
 		install -m 0644 win9x/themes/Win9x/Win9x.preview.png $(W9X)/$(TDEDIR)/share/apps/kthememanager/themes/Win9x/
 	install -D -m 0755 win9x/bin/tde-win9x-panel $(W9X)/usr/bin/tde-win9x-panel
 	install -d $(W9X)/usr/share/icons $(W9X)/usr/share/themes $(W9X)/usr/share/wallpapers $(W9X)/usr/share/sounds $(W9X)/usr/share/plymouth/themes
-	cp -a win9x/chicago95/icons/Chicago95 win9x/chicago95/cursors/Chicago95_* $(W9X)/usr/share/icons/
+	cp -a win9x/chicago95/icons/Chicago95-tux win9x/chicago95/cursors/Chicago95_* $(W9X)/usr/share/icons/
 	# TDE icon lookups need a fallback for icons Chicago95 does not draw.
-	sed -i 's/^Name=Chicago95$$/&\nInherits=crystalsvg,hicolor/' $(W9X)/usr/share/icons/Chicago95/index.theme
+	sed -i 's/^Name=Chicago95 Tux$$/&\nInherits=crystalsvg,hicolor/' $(W9X)/usr/share/icons/Chicago95-tux/index.theme
+	# TDE's Start button asks for "kmenu"; point it at the Tux start icon.
+	for s in 16 22; do ln -sf start-here.png $(W9X)/usr/share/icons/Chicago95-tux/places/$$s/kmenu.png; done
 	cp -a win9x/chicago95/gtk/Chicago95 $(W9X)/usr/share/themes/
 	install -d $(W9X)/usr/share/wallpapers/Chicago95
 	cp -a win9x/chicago95/backgrounds/Wallpaper win9x/chicago95/backgrounds/Patterns $(W9X)/usr/share/wallpapers/Chicago95/
-	cp -a win9x/chicago95/plymouth/Chicago95 $(W9X)/usr/share/plymouth/themes/
+	cp -a win9x/chicago95/plymouth/RetroTux $(W9X)/usr/share/plymouth/themes/
 	install -d $(W9X)/usr/share/sounds/Chicago95
 	install -m 0644 win9x/chicago95/sounds/* $(W9X)/usr/share/sounds/Chicago95/
 	install -D -m 0644 win9x/chicago95/colors/Chicago95_TDE.kcsrc \

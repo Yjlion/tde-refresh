@@ -178,13 +178,13 @@ Recommends:
 Description: Windows 9x look for the Trinity Desktop Environment
  Two ready-to-apply themes for the TDE Theme Manager (Control Center,
  Appearance & Themes):
-  - Chicago95: Windows 95 look with the Chicago95 icons, cursors, sounds,
-    colour scheme and wallpapers
+  - Chicago95: Windows 95 look with the Chicago95 Tux icons, cursors,
+    sounds, colour scheme and wallpapers
   - Win9x: the same colour scheme, Redmond window decoration and Windows
     widget style, but keeping TDE's own icons and cursors
  .
  It also installs Chicago95 GTK2/GTK3 themes, KSplash and TDM themes, an
- optional Chicago95 Plymouth theme and the tde-win9x-panel helper that gives
+ optional RetroTux Plymouth theme and the tde-win9x-panel helper that gives
  the panel a labelled Start button. Nothing is activated automatically.
  .
  Artwork comes from the Chicago95 project; TDE settings follow the layout of

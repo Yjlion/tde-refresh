@@ -2,9 +2,10 @@ tde-refresh-trinity (1.4) trixie; urgency=medium
 
   * Add tde-refresh-win9x-trinity: Windows 9x look for TDE, with two themes
     for the TDE Theme Manager (Chicago95, and Win9x which keeps TDE icons),
-    Chicago95 GTK, cursor, icon, wallpaper and Plymouth assets (vendored,
-    trimmed copy of Chicago95), Win9x KSplash and TDM themes, and the
-    tde-win9x-panel helper (Start button).
+    Chicago95 GTK, Tux icon, cursor and wallpaper assets and the RetroTux
+    Plymouth theme (vendored, trimmed copy of Chicago95; no Windows logo),
+    Win9x KSplash and TDM themes, and the tde-win9x-panel helper (Start
+    button).
   * Suggest tde-refresh-win9x-trinity from tde-refresh-trinity.
 
  -- yjlion <yjlion@gmail.com>  Tue, 27 Oct 2026 14:00:00 -0400
