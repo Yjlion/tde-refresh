@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="331">
+<image xlink:href="splash_top.png" x="0" y="0" width="400" height="248"/>
+<image xlink:href="splash_active_bar.png" x="0" y="248" width="400" height="64"/>
+<image xlink:href="splash_bottom.png" x="0" y="312" width="400" height="19"/>
+</svg>

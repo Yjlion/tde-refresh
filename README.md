@@ -53,6 +53,34 @@ The wallpaper and login background are rendered at build time from
 desktop-base's own SVGs. `tde-refresh-trinity` recommends it in place of
 `desktop-base-trinity`. See `screenshots/`.
 
+## `tde-refresh-win9x-trinity` (Windows 9x themes)
+
+An optional third binary package (`Suggests` of the metapackage, nothing is
+activated on install). It adds two themes to the **TDE Theme Manager**
+(Control Center → Appearance & Themes → Theme Manager):
+
+- **Chicago95** — Windows 95 look: Chicago95 Tux icons (Tux instead of a Windows logo) and cursors, teal desktop,
+  Win95 grey/navy colour scheme, Redmond window decoration, Windows widget
+  style, Chicago95 sounds.
+- **Win9x** — the same layout and colours, but keeping TDE's own icons and
+  cursors.
+
+Also installed: Chicago95 GTK2/GTK3 themes (`/usr/share/themes`), wallpapers
+and patterns (`/usr/share/wallpapers/Chicago95`), `chicago95` KSplash and TDM
+themes (pick them in the Splash Screen and Login Manager modules), the
+RetroTux Plymouth theme (inactive; Ceratopsian stays the default), and
+`tde-win9x-panel`, which gives the panel a labelled **Start** button (the Theme
+Manager cannot set that; run `tde-win9x-panel revert` to undo).
+
+Sources: artwork is a trimmed, vendored copy of
+[Chicago95](https://github.com/grassmunk/Chicago95) (`win9x/chicago95/`,
+commit in `UPSTREAM_COMMIT`, GPL-3+/MIT). The TDE settings layout follows
+`redmond-default-settings-ii-trinity`, but none of that package's
+Kubuntu-specific artwork or dependencies are used. The KSplash/TDM artwork is
+drawn from SVGs in `win9x/` and contains no Microsoft logo. No Windows logo is shipped: the Tux icon variant and the RetroTux
+Plymouth theme are used. The Chicago95 sounds do imitate Windows' (see
+`debian/copyright`).
+
 ## Building
 
 ```

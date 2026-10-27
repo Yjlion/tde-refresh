@@ -1,0 +1,4 @@
+# TDE in Debian lives under /opt/trinity; themes must be there to be found.
+tde-refresh-win9x-trinity: dir-or-file-in-opt [opt/trinity/*]
+# Trivial helper script; documented in the package description and README.
+tde-refresh-win9x-trinity: no-manual-page [usr/bin/tde-win9x-panel]

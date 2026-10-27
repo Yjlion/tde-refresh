@@ -16,7 +16,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends build-essential debhelper lintian \
-            desktop-base librsvg2-bin
+            desktop-base librsvg2-bin fonts-dejavu-core
 
       - name: Build
         run: |
