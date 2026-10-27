@@ -4,3 +4,5 @@
 /debian/files
 /debian/debhelper-build-stamp
 /out/
+/wallpaper.png
+/tdm-background.png

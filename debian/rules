@@ -1,4 +1,23 @@
 #!/usr/bin/make -f
 
+# Ceratopsian artwork shipped by Debian's desktop-base (build-dependency).
+CERATOPSIAN := /usr/share/desktop-base/ceratopsian-theme
+PKG         := debian/tde-refresh-desktop-base-trinity
+
 %:
 	dh $@
+
+# Render the TDE wallpaper and TDM login background from desktop-base's SVGs,
+# so TDE matches the rest of the Debian trixie desktop.
+override_dh_auto_build:
+	rsvg-convert -w 1920 -h 1200 $(CERATOPSIAN)/wallpaper/contents/images/1920x1200.svg -o wallpaper.png
+	rsvg-convert -w 1920 -h 1200 $(CERATOPSIAN)/login/background.svg -o tdm-background.png
+
+override_dh_auto_install:
+	install -D -m 0644 wallpaper.png $(PKG)/usr/share/wallpapers/ceratopsian.png
+	install -D -m 0644 tdm-background.png $(PKG)/opt/trinity/share/apps/tdm/themes/ceratopsian/background.png
+	install -D -m 0644 tde-theme/kompmgr/xcompmgrrc $(PKG)/etc/skel/.xcompmgrrc
+	install -D -m 0644 tde-theme/kompmgr/compton-tde.conf $(PKG)/etc/skel/.compton-tde.conf
+
+override_dh_auto_clean:
+	rm -f wallpaper.png tdm-background.png

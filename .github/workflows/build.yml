@@ -15,13 +15,14 @@ jobs:
       - name: Install build tools
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends build-essential debhelper lintian
+          apt-get install -y --no-install-recommends build-essential debhelper lintian \
+            desktop-base librsvg2-bin
 
       - name: Build
         run: |
           dpkg-buildpackage -us -uc
           mkdir out
-          mv ../tde-refresh-trinity_* out/
+          mv ../tde-refresh-*_* out/
 
       - name: Lintian
         run: lintian out/*.changes
@@ -52,4 +53,4 @@ jobs:
           apt-get update
 
       - name: Dry-run install (verifies every dependency name resolves)
-        run: apt-get install -s ./tde-refresh-trinity_*_all.deb
+        run: apt-get install -s ./tde-refresh-*_all.deb
