@@ -1,3 +1,14 @@
+tde-refresh-trinity (1.3) trixie; urgency=medium
+
+  * Add tde-refresh-desktop-base-trinity: Ceratopsian TDE theme (wallpaper,
+    KSplash, TDM login theme, default TDE profile and compositor settings)
+    built on Debian's real desktop-base, instead of the Debian 5/6-era
+    desktop-base-trinity which conflicts with desktop-base.
+  * Recommend tde-refresh-desktop-base-trinity in place of
+    desktop-base-trinity.
+
+ -- yjlion <yjlion@gmail.com>  Tue, 27 Oct 2026 12:00:00 -0400
+
 tde-refresh-trinity (1.2) trixie; urgency=medium
 
   * Recommend xdg-user-dirs-gtk (creates the standard XDG user directories),

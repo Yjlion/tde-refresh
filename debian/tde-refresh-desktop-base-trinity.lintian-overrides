@@ -1,0 +1,6 @@
+# Compositor defaults for new users are the point of shipping the kompmgr
+# settings; same approach as upstream desktop-base-trinity.
+tde-refresh-desktop-base-trinity: package-contains-file-in-etc-skel [etc/skel/.compton-tde.conf]
+tde-refresh-desktop-base-trinity: package-contains-file-in-etc-skel [etc/skel/.xcompmgrrc]
+# TDE in Debian lives under /opt/trinity; themes must be there to be found.
+tde-refresh-desktop-base-trinity: dir-or-file-in-opt [opt/trinity/*]

@@ -1,0 +1,11 @@
+[KSplash Theme: ceratopsian]
+Name = Ceratopsian
+Description = Ceratopsian KSplash Theme using the Default engine, based on the Debian 13 (trixie) Ceratopsian artwork by Elise Couper
+Version = 1.0
+Author = tde-refresh, layout based on the Debian MoreBlue theme by Fathi Boudra
+Homepage = https://wiki.debian.org/DebianArt/Themes/Ceratopsian
+Engine = Default
+
+Icons Flashing = true
+Always Show Progress = false
+Label Foreground = #ffffff

@@ -1,0 +1,8 @@
+[KdmGreeterTheme]
+Encoding=UTF-8
+Greeter=ceratopsian.xml
+Name=Ceratopsian
+Description=Ceratopsian TDM Theme, using the Debian 13 (trixie) Ceratopsian artwork by Elise Couper
+Author=tde-refresh, layout based on the MoreBlue Orbit KDM theme by Fathi Boudra
+Copyright=(c) 2008 Fathi Boudra <fabo@debian.org>, Debian Desktop Team
+Screenshot=screenshot.png

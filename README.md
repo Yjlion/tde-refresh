@@ -35,6 +35,24 @@ installs a complete TDE desktop while:
   `Recommends` are still installed by default by apt, but can be removed
   without removing the metapackage.
 
+## `tde-refresh-desktop-base-trinity` (Ceratopsian theme)
+
+The stock `desktop-base-trinity` is a Debian 5/6-era fork of `desktop-base`:
+it conflicts with (and replaces) the real `desktop-base`, ships MoreBlue/Nightly
+artwork and has no Plymouth theme. This repo's second binary package,
+`tde-refresh-desktop-base-trinity`, instead **depends on Debian's
+`desktop-base`** and adds only the TDE pieces, re-skinned with the trixie
+**Ceratopsian** artwork (the same theme as the Plymouth boot splash):
+
+- default TDE wallpaper and system-wide profile (`/etc/trinity/{kdesktoprc,ksplashrc,twinrc}`)
+- KSplash theme `ceratopsian`
+- TDM login theme `ceratopsian`
+- kompmgr/`compton-tde` compositor settings in `/etc/skel`
+
+The wallpaper and login background are rendered at build time from
+desktop-base's own SVGs. `tde-refresh-trinity` recommends it in place of
+`desktop-base-trinity`. See `screenshots/`.
+
 ## Building
 
 ```
@@ -50,8 +68,7 @@ and documentation (`xdg-desktop-portal-tde`, `polkit-agent-tde`,
 verified against the real trixie archive and may need correcting once
 tested against a system with the TDE trixie repo enabled:
 
-- `tdesudo` (the app exists upstream; the binary package may be named
-  `tdesudo-trinity`)
+- `plymouth-label` (Recommends of the theme package; confirm it resolves via CI)
 
 The CI workflow in `.github/workflows/build.yml` dry-run installs the built
 package against the live TDE trixie apt repository, so a green build means

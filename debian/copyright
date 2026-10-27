@@ -19,3 +19,14 @@ License: GPL-2+
  .
  On Debian systems, the complete text of the GNU General Public
  License version 2 can be found in "/usr/share/common-licenses/GPL-2".
+
+Files: tde-theme/tdm/* tde-theme/ksplash/* tde-theme/profile/* tde-theme/kompmgr/* tde-theme/tdm.d/*
+Copyright: 2008 Fathi Boudra <fabo@debian.org>
+           Debian Desktop Team and TDE Debian Team
+License: GPL-2+
+Comment: Derived from the desktop-base-trinity packaging in
+ https://mirror.git.trinitydesktop.org/gitea/TDE/tde-packaging
+ (debian/_base/metapackages/desktop-base). Artwork was regenerated from the
+ Ceratopsian theme by Elise Couper shipped in Debian's desktop-base
+ (see /usr/share/doc/desktop-base/copyright); the wallpaper and login
+ background are rendered from those files at build time.

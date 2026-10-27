@@ -2,7 +2,9 @@ Source: tde-refresh-trinity
 Section: metapackages
 Priority: optional
 Maintainer: yjlion <yjlion@gmail.com>
-Build-Depends: debhelper-compat (= 13)
+Build-Depends: debhelper-compat (= 13),
+ desktop-base (>= 13),
+ librsvg2-bin
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
 Homepage: https://trinitydesktop.org/
@@ -109,7 +111,7 @@ Recommends:
  xdg-user-dirs-gtk,
  gnuplot-nox,
  tdmtheme-trinity,
- desktop-base-trinity
+ tde-refresh-desktop-base-trinity
 Suggests:
  tdewebdev-trinity,
  tdeedu-trinity,
@@ -130,7 +132,30 @@ Description: Full Trinity Desktop Environment, curated (metapackage)
     xsettingsd, xdg-desktop-portal-trinity, polkitd/polkit-agent-tde,
     tdesudo, network-manager/network-manager-tde, tdebluez-trinity,
     tde-ebook-reader and kdbusnotification-trinity
+  - recommends tde-refresh-desktop-base-trinity (Ceratopsian TDE theme)
+    instead of the Debian 5/6-era desktop-base-trinity
  .
  This package intentionally does not depend on the stock tde-trinity or
  redmond-default-settings(-ii)-trinity packages, so it can be installed
  without pulling in their unwanted dependencies.
+
+Package: tde-refresh-desktop-base-trinity
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ desktop-base (>= 13),
+ tdebase-trinity,
+ tdm-trinity,
+ ksplash-trinity,
+ ${misc:Depends}
+Recommends:
+ plymouth-label
+Description: Ceratopsian theme for the Trinity Desktop Environment
+ TDE counterpart of Debian's desktop-base: TDE wallpaper, KSplash theme and
+ TDM login theme based on the Debian 13 (trixie) Ceratopsian artwork, so TDE
+ matches the Plymouth boot splash and the rest of the Debian desktop.
+ .
+ Unlike desktop-base-trinity (a Debian 5/6-era fork), this package builds on
+ the real desktop-base instead of conflicting with and replacing it. It also
+ ships the TDE default profile (wallpaper, splash theme) and the kompmgr/
+ compton-tde compositor settings.
