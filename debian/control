@@ -32,10 +32,12 @@ Depends:
  network-manager,
  network-manager-tde,
  kdbusnotification-trinity,
+ flite,
  ${misc:Depends}
 Recommends:
  plymouth,
- plymouth-themes,
+ trinity-apt-archive,
+ trinity-keyring,
  tdebluez-trinity,
  tde-ebook-reader,
  dolphin-trinity,
@@ -49,7 +51,6 @@ Recommends:
  gtk3-tqt-engine-trinity,
  gtk-qt-engine-trinity,
  kaffeine-trinity,
- qalculate-trinity,
  tde-systemsettings-trinity,
  tdeio-umountwrapper-trinity,
  tdepacman-trinity,
@@ -118,7 +119,9 @@ Suggests:
  tdewebdev-trinity,
  tdeedu-trinity,
  tdeio-apt-trinity,
- synaptic-trinity
+ synaptic-trinity,
+ qalculate-trinity,
+ gnome-packagekit
 Description: Full Trinity Desktop Environment, curated (metapackage)
  A custom metapackage that installs a complete Trinity Desktop Environment
  (TDE) on Debian, built as an independent alternative to the stock
