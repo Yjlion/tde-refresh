@@ -1,3 +1,13 @@
+tde-refresh-trinity (1.5) trixie; urgency=medium
+
+  * Depend on flite.
+  * Move qalculate-trinity from Recommends to Suggests.
+  * Suggest gnome-packagekit.
+  * Drop plymouth-themes from Recommends.
+  * Recommend trinity-apt-archive and trinity-keyring.
+
+ -- yjlion <yjlion@gmail.com>  Tue, 27 Oct 2026 15:00:00 -0400
+
 tde-refresh-trinity (1.4) trixie; urgency=medium
 
   * Add tde-refresh-win9x-trinity: Windows 9x look for TDE, with two themes
