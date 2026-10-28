@@ -1,3 +1,15 @@
+tde-refresh-trinity (1.6) trixie; urgency=medium
+
+  * desktop-base-trinity: activate the Ceratopsian TDM theme in tdmrc on
+    install (tdm.service ignores /etc/default/tdm-trinity.d), re-apply it via
+    a trigger and undo it on removal; ship /etc/trinity/tdm/backgroundrc.
+  * TDM themes (ceratopsian, chicago95): ship GdmGreeterTheme.desktop, the
+    only descriptor tdm_greet reads, instead of KdmGreeterTheme.desktop; add
+    theme previews; make the Ceratopsian labels legible.
+  * win9x-trinity: add the Chicago95 GTK4 and Metacity themes.
+
+ -- yjlion <yjlion@gmail.com>  Wed, 28 Oct 2026 10:30:00 -0400
+
 tde-refresh-trinity (1.5) trixie; urgency=medium
 
   * Depend on flite.

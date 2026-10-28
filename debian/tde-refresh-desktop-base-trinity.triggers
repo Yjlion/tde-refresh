@@ -1,0 +1,3 @@
+# tdm-trinity ships tdmrc as a conffile; re-apply our theme if an upgrade of
+# it brings back the stock placeholder.
+interest-noawait /etc/trinity/tdm/tdmrc

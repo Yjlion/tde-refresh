@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+# Undo what postinst did, so tdmrc does not point at a theme that is gone.
+TDMRC=/etc/trinity/tdm/tdmrc
+THEME=/opt/trinity/share/apps/tdm/themes/ceratopsian
+PLACEHOLDER='@@@ToBeReplacedByDesktopBase@@@'
+
+case "$1" in
+    remove|purge)
+        if [ -f "$TDMRC" ] && grep -q "^Theme=$THEME\$" "$TDMRC"; then
+            sed -i \
+                -e "s|^Theme=$THEME\$|Theme=$PLACEHOLDER|" \
+                -e 's|^UseTheme=true$|#UseTheme=true|' \
+                -e 's|^Compositor=compton-tde$|#Compositor=|' \
+                "$TDMRC"
+        fi
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+# TDM on Debian has no working theme hook under systemd: tdm.service starts
+# /opt/trinity/bin/tdm directly, so /etc/default/tdm-trinity.d is never read
+# and tdm-trinity's tdmrc keeps a placeholder theme. Replace that placeholder
+# (and only that: a tdmrc already changed by the admin or by the Control
+# Center Login Manager module is left alone) with the Ceratopsian theme.
+TDMRC=/etc/trinity/tdm/tdmrc
+THEME=/opt/trinity/share/apps/tdm/themes/ceratopsian
+PLACEHOLDER='@@@ToBeReplacedByDesktopBase@@@'
+
+case "$1" in
+    configure|triggered)
+        if [ -f "$TDMRC" ] && grep -q "^Theme=$PLACEHOLDER\$" "$TDMRC"; then
+            sed -i \
+                -e "s|^Theme=$PLACEHOLDER\$|Theme=$THEME|" \
+                -e 's|^#UseTheme=true$|UseTheme=true|' \
+                -e 's|^#Compositor=$|Compositor=compton-tde|' \
+                "$TDMRC"
+        fi
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

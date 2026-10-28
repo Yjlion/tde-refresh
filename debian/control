@@ -186,9 +186,10 @@ Description: Windows 9x look for the Trinity Desktop Environment
   - Win9x: the same colour scheme, Redmond window decoration and Windows
     widget style, but keeping TDE's own icons and cursors
  .
- It also installs Chicago95 GTK2/GTK3 themes, KSplash and TDM themes, an
- optional RetroTux Plymouth theme and the tde-win9x-panel helper that gives
- the panel a labelled Start button. Nothing is activated automatically.
+ It also installs the Chicago95 GTK2/GTK3/GTK4 themes (with a Metacity
+ theme), KSplash and TDM themes, an optional RetroTux Plymouth theme and the
+ tde-win9x-panel helper that gives the panel a labelled Start button. Nothing
+ is activated automatically.
  .
  Artwork comes from the Chicago95 project; TDE settings follow the layout of
  the redmond-default-settings-ii-trinity package, without its dependencies.

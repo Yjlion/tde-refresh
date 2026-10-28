@@ -16,7 +16,7 @@
 		<fixed>
 		<item type="label">
 			<pos anchor="nc" x="50%" y="18%"/>
-			<normal color="#000000" font="Sans Bold 18"/>
+			<normal color="#ffffff" font="Sans Bold 18"/>
 			<stock type="welcome-label"/>
 		</item>
 		</fixed>
@@ -30,7 +30,7 @@
 			<fixed>
 			<item type="label">
 				<pos anchor="ne" x="90%" y="40%"/>
-				<normal color="#000000" font="Sans Bold 10"/>
+				<normal color="#ffffff" font="Sans Bold 10"/>
 				<stock type="username-label"/>
 			</item>
 			</fixed>
@@ -39,7 +39,7 @@
 			<fixed>
 			<item type="label">
 				<pos anchor="ne" x="90%" y="60%"/>
-				<normal color="#000000" font="Sans Bold 10"/>
+				<normal color="#ffffff" font="Sans Bold 10"/>
 				<stock type="password-label"/>
 			</item>
 			</fixed>

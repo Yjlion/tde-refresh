@@ -50,7 +50,10 @@ artwork and has no Plymouth theme. This repo's second binary package,
 - kompmgr/`compton-tde` compositor settings in `/etc/skel`
 
 The wallpaper and login background are rendered at build time from
-desktop-base's own SVGs. `tde-refresh-trinity` recommends it in place of
+desktop-base's own SVGs. On install the package makes `tdmrc` use the
+Ceratopsian login theme (only if it still holds the stock placeholder theme, so
+a theme picked in the Login Manager module is never overwritten); removing the
+package restores the placeholder. `tde-refresh-trinity` recommends it in place of
 `desktop-base-trinity`. See `screenshots/`.
 
 ## `tde-refresh-win9x-trinity` (Windows 9x themes)
@@ -65,7 +68,7 @@ activated on install). It adds two themes to the **TDE Theme Manager**
 - **Win9x** — the same layout and colours, but keeping TDE's own icons and
   cursors.
 
-Also installed: Chicago95 GTK2/GTK3 themes (`/usr/share/themes`), wallpapers
+Also installed: Chicago95 GTK2/GTK3/GTK4 themes (`/usr/share/themes`), wallpapers
 and patterns (`/usr/share/wallpapers/Chicago95`), `chicago95` KSplash and TDM
 themes (pick them in the Splash Screen and Login Manager modules), the
 RetroTux Plymouth theme (inactive; Ceratopsian stays the default), and

@@ -1,4 +1,4 @@
 tde-theme/tdm/ceratopsian/*                     opt/trinity/share/apps/tdm/themes/ceratopsian/
+tde-theme/tdm/backgroundrc                      etc/trinity/tdm/
 tde-theme/ksplash/ceratopsian/*                 opt/trinity/share/apps/ksplash/Themes/ceratopsian/
 tde-theme/profile/share/config/*                etc/trinity/
-tde-theme/tdm.d/10_tde-refresh                  etc/default/tdm-trinity.d/

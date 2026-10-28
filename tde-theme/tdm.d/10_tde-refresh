@@ -1,5 +1,0 @@
-USETHEME="true"
-THEME="/opt/trinity/share/apps/tdm/themes/ceratopsian"
-WALLPAPER="/opt/trinity/share/apps/tdm/themes/ceratopsian/background.png"
-COMPOSITOR="compton-tde"
-
