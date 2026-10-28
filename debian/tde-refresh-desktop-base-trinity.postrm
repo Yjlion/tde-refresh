@@ -13,6 +13,7 @@ case "$1" in
                 -e "s|^Theme=$THEME\$|Theme=$PLACEHOLDER|" \
                 -e 's|^UseTheme=true$|#UseTheme=true|' \
                 -e 's|^Compositor=compton-tde$|#Compositor=|' \
+                -e 's|^GUIStyle=Plastik$|#GUIStyle=Windows|' \
                 "$TDMRC"
         fi
         ;;

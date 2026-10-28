@@ -53,6 +53,8 @@ Recommends:
  kaffeine-trinity,
  tde-systemsettings-trinity,
  tdeio-umountwrapper-trinity,
+ tdeio-ftps-trinity,
+ tdeio-locate-trinity,
  tdepacman-trinity,
  tdesshaskpass-trinity,
  yakuake-trinity,
@@ -188,8 +190,9 @@ Description: Windows 9x look for the Trinity Desktop Environment
  .
  It also installs the Chicago95 GTK2/GTK3/GTK4 themes (with a Metacity
  theme), KSplash and TDM themes, an optional RetroTux Plymouth theme and the
- tde-win9x-panel helper that gives the panel a labelled Start button. Nothing
- is activated automatically.
+ tde-win9x-panel helper that gives the panel a labelled Start button, and
+ tde-win9x-tdm, which gives the classic TDM login screen a Windows look.
+ Nothing is activated automatically.
  .
  Artwork comes from the Chicago95 project; TDE settings follow the layout of
  the redmond-default-settings-ii-trinity package, without its dependencies.

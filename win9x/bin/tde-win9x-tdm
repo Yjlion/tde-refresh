@@ -1,0 +1,35 @@
+#!/bin/sh
+# Give the classic (unthemed) TDM login screen a Windows 9x look: Windows
+# widget style, the Chicago95 colour scheme, no logo and the Secure Attention
+# Key (Ctrl+Alt+Del) enabled. Needs root, as it edits /etc/trinity/tdm/tdmrc;
+# the Theme Manager cannot do this and nothing is applied on install.
+# Usage: tde-win9x-tdm [apply|revert]
+# This does not choose the TDM theme; pick one in Control Center > Login Manager.
+set -e
+TDMRC=/etc/trinity/tdm/tdmrc
+SCHEME=Chicago95_TDE
+
+[ "$(id -u)" = 0 ] || { echo "${0##*/}: must be run as root" >&2; exit 1; }
+[ -f "$TDMRC" ] || { echo "${0##*/}: $TDMRC not found (is tdm-trinity installed?)" >&2; exit 1; }
+
+case "${1:-apply}" in
+apply)
+	sed -i \
+		-e "s|^#\?GUIStyle=.*|GUIStyle=Windows|" \
+		-e "s|^#\?ColorScheme=.*|ColorScheme=$SCHEME|" \
+		-e "s|^#\?LogoArea=.*|LogoArea=None|" \
+		-e "s|^#\?UseSAK=.*|UseSAK=true|" \
+		"$TDMRC"
+	;;
+revert)
+	sed -i \
+		-e "s|^GUIStyle=.*|GUIStyle=Plastik|" \
+		-e "s|^ColorScheme=.*|#ColorScheme=Pumpkin|" \
+		-e "s|^UseSAK=.*|#UseSAK=false|" \
+		"$TDMRC"
+	;;
+*)
+	echo "usage: ${0##*/} [apply|revert]" >&2
+	exit 1
+	;;
+esac
