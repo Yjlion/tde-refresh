@@ -53,6 +53,8 @@ Recommends:
  kaffeine-trinity,
  tde-systemsettings-trinity,
  tdeio-umountwrapper-trinity,
+ tdeio-ftps-trinity,
+ tdeio-locate-trinity,
  tdepacman-trinity,
  tdesshaskpass-trinity,
  yakuake-trinity,
