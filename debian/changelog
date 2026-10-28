@@ -1,3 +1,14 @@
+tde-refresh-trinity (1.7) trixie; urgency=medium
+
+  * desktop-base-trinity: set the classic (unthemed) TDM greeter to the Plastik
+    style; its Ceratopsian wallpaper comes from backgroundrc.
+  * win9x-trinity: add tde-win9x-tdm (Windows style, colour scheme, no logo and
+    Secure Attention Key for the classic TDM greeter; not applied by default).
+  * win9x-trinity: install the Chicago95_TDE colour scheme where TDE reads it
+    (tdedisplay, not kdisplay).
+
+ -- yjlion <yjlion@gmail.com>  Wed, 28 Oct 2026 11:00:00 -0400
+
 tde-refresh-trinity (1.6) trixie; urgency=medium
 
   * desktop-base-trinity: activate the Ceratopsian TDM theme in tdmrc on

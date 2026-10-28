@@ -53,7 +53,8 @@ The wallpaper and login background are rendered at build time from
 desktop-base's own SVGs. On install the package makes `tdmrc` use the
 Ceratopsian login theme (only if it still holds the stock placeholder theme, so
 a theme picked in the Login Manager module is never overwritten); removing the
-package restores the placeholder. `tde-refresh-trinity` recommends it in place of
+package restores the placeholder. Without the theme, the classic greeter uses the
+Plastik style and the Ceratopsian wallpaper. `tde-refresh-trinity` recommends it in place of
 `desktop-base-trinity`. See `screenshots/`.
 
 ## `tde-refresh-win9x-trinity` (Windows 9x themes)
@@ -73,7 +74,10 @@ and patterns (`/usr/share/wallpapers/Chicago95`), `chicago95` KSplash and TDM
 themes (pick them in the Splash Screen and Login Manager modules), the
 RetroTux Plymouth theme (inactive; Ceratopsian stays the default), and
 `tde-win9x-panel`, which gives the panel a labelled **Start** button (the Theme
-Manager cannot set that; run `tde-win9x-panel revert` to undo).
+Manager cannot set that; run `tde-win9x-panel revert` to undo) and
+`tde-win9x-tdm` (run as root), which gives the classic, unthemed TDM login
+screen the Windows widget style, the Chicago95 colour scheme, no logo and the
+Secure Attention Key; `tde-win9x-tdm revert` undoes it.
 
 Sources: artwork is a trimmed, vendored copy of
 [Chicago95](https://github.com/grassmunk/Chicago95) (`win9x/chicago95/`,

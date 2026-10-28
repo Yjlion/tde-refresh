@@ -2,3 +2,4 @@
 tde-refresh-win9x-trinity: dir-or-file-in-opt [opt/trinity/*]
 # Trivial helper script; documented in the package description and README.
 tde-refresh-win9x-trinity: no-manual-page [usr/bin/tde-win9x-panel]
+tde-refresh-win9x-trinity: no-manual-page [usr/bin/tde-win9x-tdm]

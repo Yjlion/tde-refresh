@@ -47,6 +47,7 @@ override_dh_auto_install:
 	[ ! -f win9x/themes/Win9x/Win9x.preview.png ] || \
 		install -m 0644 win9x/themes/Win9x/Win9x.preview.png $(W9X)/$(TDEDIR)/share/apps/kthememanager/themes/Win9x/
 	install -D -m 0755 win9x/bin/tde-win9x-panel $(W9X)/usr/bin/tde-win9x-panel
+	install -D -m 0755 win9x/bin/tde-win9x-tdm $(W9X)/usr/bin/tde-win9x-tdm
 	install -d $(W9X)/usr/share/icons $(W9X)/usr/share/themes $(W9X)/usr/share/wallpapers $(W9X)/usr/share/sounds $(W9X)/usr/share/plymouth/themes
 	cp -a win9x/chicago95/icons/Chicago95-tux win9x/chicago95/cursors/Chicago95_* $(W9X)/usr/share/icons/
 	# TDE icon lookups need a fallback for icons Chicago95 does not draw.
@@ -60,7 +61,7 @@ override_dh_auto_install:
 	install -d $(W9X)/usr/share/sounds/Chicago95
 	install -m 0644 win9x/chicago95/sounds/* $(W9X)/usr/share/sounds/Chicago95/
 	install -D -m 0644 win9x/chicago95/colors/Chicago95_TDE.kcsrc \
-		$(W9X)/$(TDEDIR)/share/apps/kdisplay/color-schemes/Chicago95_TDE.kcsrc
+		$(W9X)/$(TDEDIR)/share/apps/tdedisplay/color-schemes/Chicago95_TDE.kcsrc
 
 override_dh_auto_clean:
 	rm -f wallpaper.png tdm-background.png
