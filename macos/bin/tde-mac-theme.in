@@ -1,0 +1,172 @@
+#!/bin/sh
+# Turn on the @TITLE@ look for this user: theme settings, global menu bar,
+# panel layout and Konqueror layout. The TDE Theme Manager can only set part of
+# this and has no command line, so this does the whole thing in one step.
+# Usage: @COMMAND@ [apply|revert]
+#
+# Generated from macos/bin/tde-mac-theme.in. tde-macclassic and tde-macosx share
+# one backup of the user's own settings, so switching between them and then
+# reverting always returns to the settings from before the first apply.
+set -e
+PATH=/opt/trinity/bin:$PATH
+DATA=/opt/trinity/share/apps/@DATADIR@
+THEME_DIR=/opt/trinity/share/apps/kthememanager/themes/@THEME@
+
+LOCAL=$(tde-config --localprefix)
+BACKUP=${LOCAL}share/apps/tde-refresh-mac/backup
+# Everything apply can create or change, relative to $HOME or $LOCAL.
+LOCAL_FILES="share/config/kdeglobals share/config/kickerrc
+share/config/kicker_menubarpanelrc share/config/menu_panelappletrc share/config/kdesktoprc
+share/config/konquerorrc share/config/twinrc share/config/kcminputrc
+share/config/mac_taskbar_rc share/config/mac_clock_rc
+share/config/mac_systray_rc share/config/mac_starter_rc
+share/apps/konqueror/profiles/filemanagement share/apps/konqueror/konqueror.rc"
+HOME_FILES=".qt/baghirarc"
+
+running() {
+	dcop "$1" >/dev/null 2>&1
+}
+
+stop_kicker() {
+	# kicker saves its layout on exit, so it must be gone before kickerrc changes.
+	KICKER_WAS_RUNNING=
+	running kicker || return 0
+	KICKER_WAS_RUNNING=1
+	dcop kicker kicker quit >/dev/null 2>&1 || true
+	i=0
+	while running kicker && [ "$i" -lt 50 ]; do
+		i=$((i + 1))
+		sleep 0.1
+	done
+}
+
+stop_idle_konqueror() {
+	# TDE keeps a windowless Konqueror preloaded, and it would open the next
+	# window with the old settings. Instances with open windows are left alone.
+	for app in $(dcop 2>/dev/null | grep '^konqueror-' || true); do
+		if ! dcop "$app" 2>/dev/null | grep -q '^konqueror-mainwindow'; then
+			dcop "$app" MainApplication-Interface quit >/dev/null 2>&1 || true
+		fi
+	done
+}
+
+reload_session() {
+	stop_idle_konqueror
+	if [ -n "$KICKER_WAS_RUNNING" ]; then
+		kicker >/dev/null 2>&1 &
+	fi
+	if running twin; then
+		dcop twin default reconfigure >/dev/null 2>&1 || true
+	fi
+	if running kdesktop; then
+		dcop kdesktop KBackgroundIface configure >/dev/null 2>&1 || true
+		dcop kdesktop KDesktopIface configure >/dev/null 2>&1 || true
+	fi
+	# Publishes the style and colours to plain TQt and GTK programs.
+	if [ -n "$DISPLAY" ]; then
+		krdb >/dev/null 2>&1 || true
+	fi
+}
+
+save_one() {
+	# save_one <source> <name inside the backup>
+	if [ -e "$1" ]; then
+		mkdir -p "$BACKUP/files/$(dirname "$2")"
+		cp -p "$1" "$BACKUP/files/$2"
+	else
+		echo "$2" >>"$BACKUP/absent"
+	fi
+}
+
+restore_one() {
+	# restore_one <destination> <name inside the backup>
+	if [ -e "$BACKUP/files/$2" ]; then
+		mkdir -p "$(dirname "$1")"
+		cp -p "$BACKUP/files/$2" "$1"
+	else
+		rm -f "$1"
+	fi
+}
+
+save_backup() {
+	[ ! -d "$BACKUP" ] || return 0
+	mkdir -p "$BACKUP/files"
+	: >"$BACKUP/absent"
+	for f in $LOCAL_FILES; do
+		save_one "$LOCAL$f" "local/$f"
+	done
+	for f in $HOME_FILES; do
+		save_one "$HOME/$f" "home/$f"
+	done
+}
+
+restore_backup() {
+	for f in $LOCAL_FILES; do
+		restore_one "$LOCAL$f" "local/$f"
+	done
+	for f in $HOME_FILES; do
+		restore_one "$HOME/$f" "home/$f"
+	done
+}
+
+write_settings() {
+	# Lines are file|group|key|value; # starts a comment. @THEME_DIR@ in a value
+	# stands for the directory holding the theme's own files.
+	while IFS='|' read -r file group key value; do
+		case "$file" in ''|\#*) continue ;; esac
+		case "$value" in
+		*@THEME_DIR@*) value="$THEME_DIR${value#*@THEME_DIR@}" ;;
+		esac
+		kwriteconfig --file "$file" --group "$group" --key "$key" "$value"
+	done <"$DATA/settings.conf"
+}
+
+install_layouts() {
+	mkdir -p "${LOCAL}share/config" "${LOCAL}share/apps/konqueror/profiles"
+	cp "$DATA/kickerrc" "${LOCAL}share/config/kickerrc"
+	cp "$DATA/filemanagement" "${LOCAL}share/apps/konqueror/profiles/filemanagement"
+	if [ -f "$DATA/konqueror-toolbar.sed" ]; then
+		# Edit the installed file rather than ship a copy, so the toolbar stays
+		# in step with whatever konqueror-trinity is installed.
+		sed -f "$DATA/konqueror-toolbar.sed" /opt/trinity/share/apps/konqueror/konqueror.rc \
+			>"${LOCAL}share/apps/konqueror/konqueror.rc"
+	fi
+	if [ -f "$DATA/baghirarc" ]; then
+		mkdir -p "$HOME/.qt"
+		cp "$DATA/baghirarc" "$HOME/.qt/baghirarc"
+	fi
+}
+
+case "${1:-apply}" in
+apply)
+	stop_kicker
+	if [ -d "$BACKUP" ]; then
+		# Switching themes: drop what the other theme set, keep the first backup.
+		restore_backup
+	else
+		save_backup
+	fi
+	install_layouts
+	write_settings
+	reload_session
+	echo "@TITLE@ look applied. Log out and back in so that programs already"
+	echo "running use it too. Undo it with: @COMMAND@ revert"
+	;;
+revert)
+	if [ ! -d "$BACKUP" ]; then
+		echo "${0##*/}: nothing to revert (no saved settings in $BACKUP)" >&2
+		exit 1
+	fi
+	stop_kicker
+	restore_backup
+	rm -rf "$BACKUP"
+	rmdir -p "${LOCAL}share/apps/konqueror/profiles" "${LOCAL}share/apps/tde-refresh-mac" 2>/dev/null || true
+	reload_session
+	echo "Your previous settings are back. Log out and back in so that programs"
+	echo "already running use them too."
+	;;
+*)
+	echo "usage: ${0##*/} [apply|revert]" >&2
+	exit 1
+	;;
+esac

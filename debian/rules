@@ -9,6 +9,16 @@ W9X    := debian/tde-refresh-win9x-trinity
 W9XB   := debian/win9x-build
 TDEDIR := opt/trinity
 
+# Mac OS Classic and Mac OS X looks: data in macos/, one helper template.
+MACB    := debian/mac-build
+THEMES  := $(TDEDIR)/share/apps/kthememanager/themes
+
+# $(call mac_helper,command,title,data dir,theme name)
+define mac_helper
+	sed -e 's|@COMMAND@|$(1)|g' -e 's|@TITLE@|$(2)|g' -e 's|@DATADIR@|$(3)|g' -e 's|@THEME@|$(4)|g' \
+		macos/bin/tde-mac-theme.in > $(MACB)/$(1)
+endef
+
 %:
 	dh $@
 
@@ -27,6 +37,14 @@ override_dh_auto_build:
 	rsvg-convert $(W9XB)/preview.svg -o $(W9XB)/Preview.png
 	rsvg-convert win9x/tdm/boundingbox.svg -o $(W9XB)/boundingbox.png
 	rsvg-convert win9x/tdm/background.svg -o $(W9XB)/background.png
+	# Mac looks: refuse to build if the Theme Manager XML and the helper disagree.
+	sh macos/check-settings.sh macos/classic/theme/MacClassic.xml macos/classic/settings.conf
+	sh macos/check-settings.sh macos/osx/theme/MacOSX.xml macos/osx/settings.conf
+	mkdir -p $(MACB)
+	$(call mac_helper,tde-macclassic,Mac OS Classic,tde-refresh-macclassic,MacClassic)
+	$(call mac_helper,tde-macosx,Mac OS X,tde-refresh-macosx,MacOSX)
+	rsvg-convert macos/classic/desktop.svg -o $(MACB)/macclassic-desktop.png
+	rsvg-convert macos/osx/desktop.svg -o $(MACB)/macosx-desktop.png
 
 override_dh_auto_install:
 	install -D -m 0644 wallpaper.png $(PKG)/usr/share/wallpapers/ceratopsian.png
@@ -63,6 +81,23 @@ override_dh_auto_install:
 	install -D -m 0644 win9x/chicago95/colors/Chicago95_TDE.kcsrc \
 		$(W9X)/$(TDEDIR)/share/apps/tdedisplay/color-schemes/Chicago95_TDE.kcsrc
 
+	# tde-refresh-macclassic-trinity
+	d=debian/tde-refresh-macclassic-trinity; \
+	install -D -m 0755 $(MACB)/tde-macclassic $$d/usr/bin/tde-macclassic; \
+	install -d $$d/$(THEMES)/MacClassic $$d/$(TDEDIR)/share/apps/tde-refresh-macclassic; \
+	install -m 0644 macos/classic/theme/* $(MACB)/macclassic-desktop.png $$d/$(THEMES)/MacClassic/; \
+	install -m 0644 macos/classic/settings.conf macos/classic/kickerrc macos/classic/filemanagement \
+		$$d/$(TDEDIR)/share/apps/tde-refresh-macclassic/
+
+	# tde-refresh-macosx-trinity
+	d=debian/tde-refresh-macosx-trinity; \
+	install -D -m 0755 $(MACB)/tde-macosx $$d/usr/bin/tde-macosx; \
+	install -d $$d/$(THEMES)/MacOSX $$d/$(TDEDIR)/share/apps/tde-refresh-macosx; \
+	install -m 0644 macos/osx/theme/* $(MACB)/macosx-desktop.png $$d/$(THEMES)/MacOSX/; \
+	install -m 0644 macos/osx/settings.conf macos/osx/kickerrc macos/osx/filemanagement \
+		macos/osx/konqueror-toolbar.sed macos/osx/baghirarc \
+		$$d/$(TDEDIR)/share/apps/tde-refresh-macosx/
+
 override_dh_auto_clean:
 	rm -f wallpaper.png tdm-background.png
-	rm -rf $(W9XB)
+	rm -rf $(W9XB) $(MACB)
