@@ -124,6 +124,7 @@ write_settings() {
 install_layouts() {
 	mkdir -p "${LOCAL}share/config" "${LOCAL}share/apps/konqueror/profiles"
 	cp "$DATA/kickerrc" "${LOCAL}share/config/kickerrc"
+	cp "$DATA/kicker_menubarpanelrc" "${LOCAL}share/config/kicker_menubarpanelrc"
 	cp "$DATA/filemanagement" "${LOCAL}share/apps/konqueror/profiles/filemanagement"
 	if [ -f "$DATA/konqueror-toolbar.sed" ]; then
 		# Edit the installed file rather than ship a copy, so the toolbar stays

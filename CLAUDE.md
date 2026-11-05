@@ -154,6 +154,10 @@ mistakes. `lintian` in the `build` job catches packaging-metadata problems.
   macStyle`), panel applets or Konqueror layout, so the helpers write those.
 - `settings.conf` repeats values from the theme XML. Change both:
   `macos/check-settings.sh` fails the build if they disagree.
+- The top bar is kicker's menu bar panel, laid out by `kicker_menubarpanelrc`; it
+  lists the applets, and its height is forced by kicker. Classic hides the main
+  panel with `AutoHidePanel` and `UnhideLocation=0`: kicker can't run without one,
+  and `UserHidden` would leave an unhide arrow on screen.
 - A new file written by `apply` must be added to `LOCAL_FILES` or `HOME_FILES` in
   the template, or `revert` will not restore it.
 - To test, start TDE under Xvfb with a throwaway `HOME` containing
