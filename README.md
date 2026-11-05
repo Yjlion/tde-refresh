@@ -1,7 +1,8 @@
 # tde-refresh-trinity
 
 A custom, independent Debian metapackage for the [Trinity Desktop
-Environment](https://trinitydesktop.org/) (TDE), targeting Debian trixie.
+Environment](https://trinitydesktop.org/) (TDE), targeting Debian trixie and
+TDE R14.1.7.
 
 ## Why not just use `tde-trinity`?
 
@@ -88,6 +89,34 @@ drawn from SVGs in `win9x/` and contains no Microsoft logo. No Windows logo is s
 Plymouth theme are used. The Chicago95 sounds do imitate Windows' (see
 `debian/copyright`).
 
+## `tde-refresh-macclassic-trinity` and `tde-refresh-macosx-trinity` (Mac looks)
+
+Two optional packages (`Suggests` of the metapackage, nothing is activated on
+install). Each emulates a Mac desktop, with a global menu bar at the top of the
+screen and a Finder-like Konqueror:
+
+| | Mac OS Classic | Mac OS X |
+| --- | --- | --- |
+| Widget style | built-in Platinum | Baghira (Panther mode) |
+| Window decoration | System++ | Baghira |
+| Panel | slim strip under the menu bar | centred dock with the Baghira starter |
+| Konqueror | icon view only, no toolbars, each folder in a new window | sidebar, icon view and compact toolbar, no location bar |
+| Command | `tde-macclassic` | `tde-macosx` |
+
+Run the command as your own user, then log out and back in so that programs
+already running pick up the style. `tde-macclassic revert` or `tde-macosx revert`
+restores your previous settings; switching directly between the two keeps that
+same backup. Either theme also appears in the **Theme Manager** as `MacClassic`
+or `MacOSX`, but the Theme Manager can only set the colours, style, decoration
+and wallpaper. The global menu, panel and Konqueror layouts need the command.
+
+Known limits: the top bar holds only the application's menus, so the launcher
+button sits on the strip or dock rather than at the far left of the menu bar; the
+dock is a kicker panel, with no magnification or bounce; and the Baghira starter's
+popup is cramped and clips some of its text. No Apple artwork, logos or fonts are
+included: the wallpapers are drawn here (`macos/*/desktop.svg`) and the icons are
+TDE's own. See `screenshots/`.
+
 ## Building
 
 ```
@@ -96,16 +125,8 @@ dpkg-buildpackage -us -uc
 
 ## Known caveats
 
-Most dependency names have been checked against TDE's published changelogs
-and documentation (`xdg-desktop-portal-tde`, `polkit-agent-tde`,
-`network-manager-tde`, `tdebluez-trinity`, `tde-ebook-reader`,
-`kdbusnotification-trinity`), but the following have **not** yet been
-verified against the real trixie archive and may need correcting once
-tested against a system with the TDE trixie repo enabled:
-
-- `plymouth-label` (Recommends of the theme package; confirm it resolves via CI)
-
-The CI workflow in `.github/workflows/build.yml` dry-run installs the built
-package against the live TDE trixie apt repository, so a green build means
-every dependency name resolves. If any name is wrong, update
+Every dependency name has been checked against the TDE R14.1.7 trixie archive and
+Debian trixie. The CI workflow in `.github/workflows/build.yml` dry-run installs
+the built packages against the live TDE trixie apt repository, so a green build
+means every dependency name still resolves. If a name stops resolving, update
 `debian/control` accordingly.

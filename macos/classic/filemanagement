@@ -1,0 +1,11 @@
+[Profile]
+Name=File Management
+RootItem=View1
+View1_LinkedView=false
+View1_PassiveMode=false
+View1_ServiceName=konq_iconview
+View1_ServiceType=inode/directory
+View1_ToggleView=false
+View1_URL=$HOME
+Width=640
+Height=460

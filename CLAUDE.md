@@ -4,11 +4,20 @@ Guidance for AI assistants (and humans) working in this repository.
 
 ## What this repo is
 
-`tde-refresh` builds a single Debian **metapackage**, `tde-refresh-trinity`: a
-curated, self-contained way to install the [Trinity Desktop Environment](https://trinitydesktop.org/)
-(TDE) on Debian **trixie**. A metapackage ships no real content of its own — it
-is just a package whose `Depends`/`Recommends`/`Suggests` fields pull in the set
-of TDE packages we consider a good default desktop.
+`tde-refresh` builds a Debian **metapackage**, `tde-refresh-trinity`: a curated,
+self-contained way to install the [Trinity Desktop Environment](https://trinitydesktop.org/)
+(TDE) R14.1.7 on Debian **trixie**. A metapackage ships no real content of its own
+— it is just a package whose `Depends`/`Recommends`/`Suggests` fields pull in the
+set of TDE packages we consider a good default desktop.
+
+The same source also builds optional theme packages, which do ship content:
+
+| Package | Content lives in | Helper |
+| --- | --- | --- |
+| `tde-refresh-desktop-base-trinity` | `tde-theme/` | none (postinst edits `tdmrc`) |
+| `tde-refresh-win9x-trinity` | `win9x/` | `tde-win9x-panel`, `tde-win9x-tdm` |
+| `tde-refresh-macclassic-trinity` | `macos/classic/` | `tde-macclassic` |
+| `tde-refresh-macosx-trinity` | `macos/osx/` | `tde-macosx` |
 
 It is an independent alternative to the stock `tde-trinity`,
 `redmond-default-settings-trinity`, and `redmond-default-settings-ii-trinity`
@@ -38,14 +47,22 @@ The rationale is documented in more detail in `README.md`.
 │   ├── control               # THE core file: package metadata + dependency lists
 │   ├── changelog             # Package version history (drives the build version)
 │   ├── copyright             # DEP-5 copyright/licensing (GPL-2+)
-│   ├── rules                 # Build recipe — minimal `dh $@` passthrough
+│   ├── rules                 # Build recipe — renders artwork, installs the themes
 │   └── source/format         # "3.0 (native)" — native package, no separate orig tarball
+├── tde-theme/                # Ceratopsian theme data
+├── win9x/                    # Windows 9x theme data and helpers
+├── macos/                    # Mac OS Classic and Mac OS X theme data
+│   ├── bin/tde-mac-theme.in  # Template for tde-macclassic and tde-macosx
+│   ├── check-settings.sh     # Build-time check: XML and settings.conf must agree
+│   ├── classic/  osx/        # theme/ (Theme Manager), settings.conf, kickerrc, profile
+├── screenshots/
 └── .github/workflows/
-    └── build.yml             # CI: build + lintian + dependency-resolution check
+    ├── build.yml             # CI: build + lintian + dependency-resolution check
+    └── release.yml           # Publishes the .debs when a v* tag is pushed
 ```
 
-There is **no source code** here — this is packaging only. `debian/control` is
-where essentially all real work happens.
+There is no compiled code here, only packaging, theme data and small shell
+helpers. For the metapackage, `debian/control` is where the work happens.
 
 ## The one file that matters: `debian/control`
 
@@ -85,7 +102,8 @@ timestamp line beginning with ` -- `.
 ## Building locally
 
 Requires a Debian/Ubuntu-like environment with packaging tools
-(`build-essential`, `debhelper`, and `lintian` for the lint step):
+(`build-essential`, `debhelper`, `desktop-base`, `librsvg2-bin`, `fonts-dejavu-core`,
+and `lintian` for the lint step):
 
 ```
 dpkg-buildpackage -us -uc      # -us -uc = don't sign the source/changes
@@ -98,8 +116,7 @@ directory. `.gitignore` covers the in-tree debhelper detritus
 optional `/out/` dir; never commit build artifacts.
 
 Note the dependencies mostly live only in the TDE trixie repository, so a plain
-`dpkg-buildpackage` succeeds (a metapackage build does not need its
-dependencies present) but *installing* the result requires that repo enabled —
+`dpkg-buildpackage` succeeds (the build does not need TDE present) but *installing* the result requires that repo enabled —
 see the CI `dep-check` job for how it's added.
 
 ## CI (`.github/workflows/build.yml`)
@@ -107,12 +124,12 @@ see the CI `dep-check` job for how it's added.
 Runs on every `push` and `pull_request`, in a `debian:trixie` container, in two
 jobs:
 
-1. **`build`** — installs `build-essential debhelper lintian`, runs
+1. **`build`** — installs the build tools listed above, runs
    `dpkg-buildpackage -us -uc`, moves artifacts into `out/`, runs `lintian`,
    and uploads the `.deb` as an artifact.
 2. **`dep-check`** (needs `build`) — downloads the artifact, enables the TDE
    trixie apt repo (installs `trinity-keyring`, adds the sources list), and runs
-   `apt-get install -s ./tde-refresh-trinity_*_all.deb` (a `-s` **simulate**).
+   `apt-get install -s ./tde-refresh-*_all.deb` (a `-s` **simulate**).
    This is the real gate on dependency-name correctness: if any name in
    `debian/control` doesn't resolve, this job fails.
 
@@ -128,8 +145,20 @@ mistakes. `lintian` in the `build` job catches packaging-metadata problems.
 - **Keep `README.md` and `debian/control` consistent.** If you change the
   dependency set, update the README's rationale and the control `Description:`
   and clear/adjust any stale entries in the README "Known caveats" section.
-- Don't add a `debian/rules` override unless a metapackage genuinely needs one;
-  the minimal `dh $@` passthrough is intentional.
+- `debian/rules` overrides exist to render and install theme artwork. Don't add
+  more unless a package genuinely needs them.
+
+## Mac theme notes
+
+- The Theme Manager has no CLI and cannot set the global menu (`kdeglobals [KDE]
+  macStyle`), panel applets or Konqueror layout, so the helpers write those.
+- `settings.conf` repeats values from the theme XML. Change both:
+  `macos/check-settings.sh` fails the build if they disagree.
+- A new file written by `apply` must be added to `LOCAL_FILES` or `HOME_FILES` in
+  the template, or `revert` will not restore it.
+- To test, start TDE under Xvfb with a throwaway `HOME` containing
+  `[General] FirstLogin=false` in `kpersonalizerrc`. Log out and back in after
+  `apply` before judging: running programs keep the old settings.
 
 ## Git & workflow
 

@@ -1,3 +1,16 @@
+tde-refresh-trinity (1.8) trixie; urgency=medium
+
+  * Refresh for TDE R14.1.7: require tdebase-trinity >= 4:14.1.7.
+  * Add tde-refresh-macclassic-trinity: Mac OS Classic look with the built-in
+    Platinum style and System++ decoration, global menu bar, slim panel and a
+    Finder-like Konqueror (tde-macclassic helper; not applied by default).
+  * Add tde-refresh-macosx-trinity: Mac OS X look with Baghira, global menu
+    bar, dock-like panel and a Finder-like Konqueror (tde-macosx helper; not
+    applied by default).
+  * Suggest both new packages from tde-refresh-trinity.
+
+ -- yjlion <yjlion@gmail.com>  Wed, 04 Nov 2026 12:00:00 -0500
+
 tde-refresh-trinity (1.7) trixie; urgency=medium
 
   * desktop-base-trinity: set the classic (unthemed) TDM greeter to the Plastik

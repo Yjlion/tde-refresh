@@ -1,5 +1,5 @@
 /debian/.debhelper/
-/debian/tde-refresh-trinity/
+/debian/tde-refresh-*/
 /debian/*.substvars
 /debian/files
 /debian/debhelper-build-stamp
@@ -7,3 +7,5 @@
 /wallpaper.png
 /tdm-background.png
 /debian/win9x-build/
+/debian/mac-build/
+/debian/*.debhelper

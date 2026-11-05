@@ -16,7 +16,7 @@ Package: tde-refresh-trinity
 Architecture: all
 Multi-Arch: foreign
 Depends:
- tdebase-trinity,
+ tdebase-trinity (>= 4:14.1.7),
  tdelibs-trinity,
  tdeartwork-trinity,
  tdeaddons-trinity,
@@ -118,6 +118,8 @@ Recommends:
  tde-refresh-desktop-base-trinity
 Suggests:
  tde-refresh-win9x-trinity,
+ tde-refresh-macclassic-trinity,
+ tde-refresh-macosx-trinity,
  tdewebdev-trinity,
  tdeedu-trinity,
  tdeio-apt-trinity,
@@ -141,7 +143,9 @@ Description: Full Trinity Desktop Environment, curated (metapackage)
     tde-ebook-reader and kdbusnotification-trinity
   - recommends tde-refresh-desktop-base-trinity (Ceratopsian TDE theme)
     instead of the Debian 5/6-era desktop-base-trinity
-  - suggests tde-refresh-win9x-trinity (optional Windows 9x themes)
+  - suggests tde-refresh-win9x-trinity (optional Windows 9x themes) and
+    tde-refresh-macclassic-trinity and tde-refresh-macosx-trinity (optional
+    Mac OS Classic and Mac OS X looks)
  .
  This package intentionally does not depend on the stock tde-trinity or
  redmond-default-settings(-ii)-trinity packages, so it can be installed
@@ -196,3 +200,49 @@ Description: Windows 9x look for the Trinity Desktop Environment
  .
  Artwork comes from the Chicago95 project; TDE settings follow the layout of
  the redmond-default-settings-ii-trinity package, without its dependencies.
+
+Package: tde-refresh-macclassic-trinity
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ tdebase-trinity (>= 4:14.1.7),
+ tdelibs-trinity,
+ tdeartwork-theme-window-trinity,
+ kicker-trinity,
+ konqueror-trinity,
+ ${misc:Depends}
+Description: Mac OS Classic look for the Trinity Desktop Environment
+ Emulates the classic Mac OS interface using TDE's built-in Platinum widget
+ style and System++ window decoration, with a global menu bar at the top of
+ the screen, a slim panel below it, and a Finder-like Konqueror: one icon view
+ per window, each folder in a new window, no sidebar or toolbars.
+ .
+ Nothing is activated on install. The tde-macclassic command applies the whole
+ look for the current user and "tde-macclassic revert" restores their previous
+ settings. The theme also appears in the TDE Theme Manager, which can set the
+ colours, style and decoration only.
+ .
+ It contains no Apple artwork, logos or fonts.
+
+Package: tde-refresh-macosx-trinity
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ tdebase-trinity (>= 4:14.1.7),
+ tdelibs-trinity,
+ tde-style-baghira-trinity (>= 4:14.1.7),
+ kicker-trinity,
+ konqueror-trinity,
+ ${misc:Depends}
+Description: Mac OS X look for the Trinity Desktop Environment
+ Emulates the Mac OS X interface using the Baghira widget style and window
+ decoration, with a global menu bar at the top of the screen, a centred
+ dock-like panel, and a Finder-like Konqueror: sidebar, icon view and a compact
+ toolbar, without a location bar.
+ .
+ Nothing is activated on install. The tde-macosx command applies the whole look
+ for the current user and "tde-macosx revert" restores their previous settings.
+ The theme also appears in the TDE Theme Manager, which can set the colours,
+ style and decoration only.
+ .
+ It contains no Apple artwork, logos or fonts.

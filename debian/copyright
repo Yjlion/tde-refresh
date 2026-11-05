@@ -41,6 +41,12 @@ Comment: Trimmed copy of https://github.com/grassmunk/Chicago95 at the commit
  Microsoft products; Microsoft's own rights in them are not granted by this
  package.
 
+Files: macos/*
+Copyright: 2026 tde-refresh authors
+License: GPL-2+
+Comment: Artwork is drawn here as SVG. No Apple artwork, logos or fonts are
+ included. Mac OS and Platinum are named only to describe the look emulated.
+
 Files: win9x/ksplash/* win9x/tdm/* win9x/themes/* win9x/bin/*
 Copyright: 2026 tde-refresh authors, layout from Fathi Boudra and the
            Debian Desktop/TDE Debian teams
