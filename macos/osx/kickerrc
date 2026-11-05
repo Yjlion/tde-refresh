@@ -1,6 +1,6 @@
 [General]
 Alignment=1
-Applets2=Applet_1,ServiceButton_1,ServiceButton_2,ServiceButton_3,ServiceButton_4,Applet_2,Applet_3,Applet_4
+Applets2=ServiceButton_1,ServiceButton_2,ServiceButton_3,ServiceButton_4,Applet_1
 CustomSize=56
 ExpandSize=true
 IExist=true
@@ -8,14 +8,9 @@ Position=3
 ShowLeftHideButton=false
 ShowRightHideButton=false
 Size=4
-SizePercentage=70
+SizePercentage=60
 Transparent=false
 UseResizeHandle=false
-
-[Applet_1]
-ConfigFile[$e]=mac_starter_rc
-DesktopFile[$e]=baghira-starter.desktop
-FreeSpace2=0
 
 [ServiceButton_1]
 DesktopFile[$e]=/opt/trinity/share/applications/tde/Home.desktop
@@ -37,17 +32,7 @@ DesktopFile[$e]=/opt/trinity/share/applications/tde/KControl.desktop
 FreeSpace2=0
 StorageId[$e]=tde-KControl.desktop
 
-[Applet_2]
+[Applet_1]
 ConfigFile[$e]=mac_taskbar_rc
 DesktopFile[$e]=taskbarapplet.desktop
 FreeSpace2=0.1
-
-[Applet_3]
-ConfigFile[$e]=mac_systray_rc
-DesktopFile[$e]=systemtrayapplet.desktop
-FreeSpace2=1
-
-[Applet_4]
-ConfigFile[$e]=mac_clock_rc
-DesktopFile[$e]=clockapplet.desktop
-FreeSpace2=1

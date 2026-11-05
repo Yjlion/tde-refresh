@@ -12,9 +12,10 @@ Captured in a `debian:trixie` Docker container with the TDE trixie repo,
 | `win9x-tde-icons-desktop.png` | After applying the **Win9x** theme: same layout and colours, TDE's own icons. |
 | `win9x-tde-icons-theme-manager.png` | The Theme Manager listing the Win9x theme. |
 | `ksplash.png` | The `ceratopsian` KSplash theme (`ksplash --test --theme ceratopsian`) over the desktop. |
-| `mac-classic-desktop.png` | After `tde-macclassic` and a new login: Platinum style, System++ decoration, Konqueror's menus in the global menu bar, old-Finder Konqueror. |
+| `mac-classic-desktop.png` | After `tde-macclassic` and a new login: one top bar with the applications menu, Konqueror's menus, window list, tray and clock; Platinum style, System++ decoration, old-Finder Konqueror. |
 | `mac-classic-desktop-menu.png` | The same look with the desktop focused: the top bar shows the desktop's own menus. |
-| `mac-osx-desktop.png` | After `tde-macosx` and a new login: Baghira style and decoration, global menu bar, dock, Konqueror with sidebar and compact toolbar. |
+| `mac-osx-desktop.png` | After `tde-macosx` and a new login: Baghira style and decoration, top bar with the Baghira starter, app menus, tray and clock, dock with launchers and taskbar, Konqueror with sidebar and compact toolbar. |
+| `mac-menubar-right-click.png` | Right-clicking the top bar to add or remove applets. |
 | `mac-theme-manager.png` | The Theme Manager listing `MacClassic` and `MacOSX`. |
 
 The `win9x-*` shots were taken with `tde-refresh-win9x-trinity` installed by

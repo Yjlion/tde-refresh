@@ -213,9 +213,10 @@ Depends:
  ${misc:Depends}
 Description: Mac OS Classic look for the Trinity Desktop Environment
  Emulates the classic Mac OS interface using TDE's built-in Platinum widget
- style and System++ window decoration, with a global menu bar at the top of
- the screen, a slim panel below it, and a Finder-like Konqueror: one icon view
- per window, each folder in a new window, no sidebar or toolbars.
+ style and System++ window decoration, with one bar at the top of the screen
+ holding the global menu, applications menu, window list, tray and clock, and
+ a Finder-like Konqueror: one icon view per window, each folder in a new window,
+ no sidebar or toolbars.
  .
  Nothing is activated on install. The tde-macclassic command applies the whole
  look for the current user and "tde-macclassic revert" restores their previous
@@ -236,9 +237,9 @@ Depends:
  ${misc:Depends}
 Description: Mac OS X look for the Trinity Desktop Environment
  Emulates the Mac OS X interface using the Baghira widget style and window
- decoration, with a global menu bar at the top of the screen, a centred
- dock-like panel, and a Finder-like Konqueror: sidebar, icon view and a compact
- toolbar, without a location bar.
+ decoration, with a bar at the top of the screen holding the global menu,
+ Baghira starter, tray and clock, a centred dock-like panel, and a Finder-like
+ Konqueror: sidebar, icon view and a compact toolbar, without a location bar.
  .
  Nothing is activated on install. The tde-macosx command applies the whole look
  for the current user and "tde-macosx revert" restores their previous settings.

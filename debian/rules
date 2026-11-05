@@ -86,7 +86,7 @@ override_dh_auto_install:
 	install -D -m 0755 $(MACB)/tde-macclassic $$d/usr/bin/tde-macclassic; \
 	install -d $$d/$(THEMES)/MacClassic $$d/$(TDEDIR)/share/apps/tde-refresh-macclassic; \
 	install -m 0644 macos/classic/theme/* $(MACB)/macclassic-desktop.png $$d/$(THEMES)/MacClassic/; \
-	install -m 0644 macos/classic/settings.conf macos/classic/kickerrc macos/classic/filemanagement \
+	install -m 0644 macos/classic/settings.conf macos/classic/kickerrc macos/classic/kicker_menubarpanelrc macos/classic/filemanagement \
 		$$d/$(TDEDIR)/share/apps/tde-refresh-macclassic/
 
 	# tde-refresh-macosx-trinity
@@ -94,7 +94,7 @@ override_dh_auto_install:
 	install -D -m 0755 $(MACB)/tde-macosx $$d/usr/bin/tde-macosx; \
 	install -d $$d/$(THEMES)/MacOSX $$d/$(TDEDIR)/share/apps/tde-refresh-macosx; \
 	install -m 0644 macos/osx/theme/* $(MACB)/macosx-desktop.png $$d/$(THEMES)/MacOSX/; \
-	install -m 0644 macos/osx/settings.conf macos/osx/kickerrc macos/osx/filemanagement \
+	install -m 0644 macos/osx/settings.conf macos/osx/kickerrc macos/osx/kicker_menubarpanelrc macos/osx/filemanagement \
 		macos/osx/konqueror-toolbar.sed macos/osx/baghirarc \
 		$$d/$(TDEDIR)/share/apps/tde-refresh-macosx/
 

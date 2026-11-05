@@ -99,7 +99,8 @@ screen and a Finder-like Konqueror:
 | --- | --- | --- |
 | Widget style | built-in Platinum | Baghira (Panther mode) |
 | Window decoration | System++ | Baghira |
-| Panel | slim strip under the menu bar | centred dock with the Baghira starter |
+| Top bar | applications menu, app menus, window list, tray and clock | Baghira starter, app menus, tray and clock |
+| Other panels | none | centred dock with launchers and taskbar |
 | Konqueror | icon view only, no toolbars, each folder in a new window | sidebar, icon view and compact toolbar, no location bar |
 | Command | `tde-macclassic` | `tde-macosx` |
 
@@ -110,10 +111,16 @@ same backup. Either theme also appears in the **Theme Manager** as `MacClassic`
 or `MacOSX`, but the Theme Manager can only set the colours, style, decoration
 and wallpaper. The global menu, panel and Konqueror layouts need the command.
 
-Known limits: the top bar holds only the application's menus, so the launcher
-button sits on the strip or dock rather than at the far left of the menu bar; the
-dock is a kicker panel, with no magnification or bounce; and the Baghira starter's
-popup is cramped and clips some of its text. No Apple artwork, logos or fonts are
+Right-click the top bar to add or remove applets (**Add Applet to Menubar**,
+**Remove From Menubar**). It has no **Configure Panel** entry; use the Panels module
+in Control Center. The main panel in the Classic look is still running, empty and
+auto-hidden, because `kicker` can't run without one.
+
+If you applied either look before version 1.9, run the command again to get this
+layout. Your original settings stay backed up.
+
+Known limits: the dock is a kicker panel, with no magnification or bounce, and the
+Baghira starter's popup is cramped and clips some of its text. No Apple artwork, logos or fonts are
 included: the wallpapers are drawn here (`macos/*/desktop.svg`) and the icons are
 TDE's own. See `screenshots/`.
 

@@ -1,3 +1,15 @@
+tde-refresh-trinity (1.9) trixie; urgency=medium
+
+  * macclassic-trinity: replace the panel under the global menu bar with one
+    top bar holding the applications menu, global menu, window list, tray and
+    clock. The required main panel stays empty and auto-hidden.
+  * macosx-trinity: move the Baghira starter, tray and clock from the dock to
+    the top bar. The dock keeps the launchers and taskbar.
+  * Anyone who applied a look with 1.8 must run tde-macclassic or tde-macosx
+    again to get this layout; their original settings stay backed up.
+
+ -- yjlion <yjlion@gmail.com>  Wed, 04 Nov 2026 22:00:00 -0500
+
 tde-refresh-trinity (1.8) trixie; urgency=medium
 
   * Refresh for TDE R14.1.7: require tdebase-trinity >= 4:14.1.7.
