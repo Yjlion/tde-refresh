@@ -124,6 +124,48 @@ Baghira starter's popup is cramped and clips some of its text. No Apple artwork,
 included: the wallpapers are drawn here (`macos/*/desktop.svg`) and the icons are
 TDE's own. See `screenshots/`.
 
+## Install from OBS
+
+The packages are built on the [Open Build
+Service](https://build.opensuse.org/package/show/home:yjlion/tde-refresh) for
+Debian 13 (trixie), `amd64`. The metapackages depend on TDE packages, so enable
+the TDE trixie repository as well as this one.
+
+```bash
+sudo apt install curl gnupg ca-certificates
+```
+
+Add the TDE repository:
+
+```bash
+curl -fsSLO http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb
+sudo dpkg -i trinity-keyring.deb
+echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-r14.1.x trixie main deps" |
+  sudo tee /etc/apt/sources.list.d/tde.list
+```
+
+Add the tde-refresh repository. Its signing key has the fingerprint
+`9E5B EDB9 26B5 FDD1 544B  2DB0 3B4C F91B 4650 8745`:
+
+```bash
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://download.opensuse.org/repositories/home:/yjlion/Debian_13/Release.key |
+  gpg --dearmor | sudo tee /etc/apt/keyrings/tde-refresh.gpg >/dev/null
+echo "deb [signed-by=/etc/apt/keyrings/tde-refresh.gpg] https://download.opensuse.org/repositories/home:/yjlion/Debian_13/ /" |
+  sudo tee /etc/apt/sources.list.d/tde-refresh.list
+```
+
+Then install:
+
+```bash
+sudo apt update
+sudo apt install tde-refresh-trinity
+```
+
+The optional looks are separate packages: `tde-refresh-desktop-base-trinity`,
+`tde-refresh-win9x-trinity`, `tde-refresh-macclassic-trinity` and
+`tde-refresh-macosx-trinity`.
+
 ## Building
 
 ```
