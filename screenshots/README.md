@@ -2,8 +2,8 @@
 
 Captured in a `debian:trixie` Docker container with the TDE trixie repo,
 `tde-refresh-desktop-base-trinity` installed, and TDE running on Xvfb
-(1280x800). They show the trixie build (Ceratopsian); the bookworm build
-(Emerald) has no screenshots yet.
+(1280x800). The `bookworm-*` shots were taken the same way in a
+`debian:bookworm` container with the TDE bookworm repo.
 
 | File | What it shows |
 | --- | --- |
@@ -13,6 +13,8 @@ Captured in a `debian:trixie` Docker container with the TDE trixie repo,
 | `win9x-tde-icons-desktop.png` | After applying the **Win9x** theme: same layout and colours, TDE's own icons. |
 | `win9x-tde-icons-theme-manager.png` | The Theme Manager listing the Win9x theme. |
 | `ksplash.png` | The `ceratopsian` KSplash theme (`ksplash --test --theme ceratopsian`) over the desktop. |
+| `bookworm-desktop.png` | The bookworm build: Emerald wallpaper. |
+| `bookworm-ksplash.png` | The `emerald` KSplash theme (`ksplash --test --theme emerald`) over the bookworm desktop. |
 | `mac-classic-desktop.png` | After `tde-macclassic` and a new login: one top bar with the applications menu, Konqueror's menus, window list, tray and clock; Platinum style, System++ decoration, old-Finder Konqueror. |
 | `mac-classic-desktop-menu.png` | The same look with the desktop focused: the top bar shows the desktop's own menus. |
 | `mac-osx-desktop.png` | After `tde-macosx` and a new login: Baghira style and decoration, top bar with the Baghira starter, app menus, tray and clock, dock with launchers and taskbar, Konqueror with sidebar and compact toolbar. |
@@ -31,7 +33,7 @@ selecting each theme in the Theme Manager and clicking OK.
   (no VT/real X server). The package override was verified to produce
   `Theme=/opt/trinity/share/apps/tdm/themes/ceratopsian` in the generated
   `tdmrc`, but the greeter itself has not been seen rendered. Check this on a
-  real machine.
+  real machine. The same holds for the `emerald` theme on bookworm.
 - **Plymouth**: the boot splash is Debian's own Ceratopsian theme from
   `desktop-base`, not part of this package. Plymouth's X11 renderer would not
   activate in the container, so there is no capture.
