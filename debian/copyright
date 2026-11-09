@@ -27,9 +27,11 @@ License: GPL-2+
 Comment: Derived from the desktop-base-trinity packaging in
  https://mirror.git.trinitydesktop.org/gitea/TDE/tde-packaging
  (debian/_base/metapackages/desktop-base). Artwork was regenerated from the
- Ceratopsian theme by Elise Couper shipped in Debian's desktop-base
- (see /usr/share/doc/desktop-base/copyright); the wallpaper and login
- background are rendered from those files at build time.
+ Ceratopsian theme by Elise Couper and the Emerald theme by Juliette Taka,
+ both shipped in Debian's desktop-base (see
+ /usr/share/doc/desktop-base/copyright); the wallpaper and login background
+ are rendered from those files at build time. The Emerald KSplash and TDM
+ images were made from them with tde-theme/make-theme-art.py.
 
 Files: win9x/chicago95/*
 Copyright: Chicago95 contributors (see win9x/chicago95/CREDITS)

@@ -1,8 +1,31 @@
 #!/usr/bin/make -f
 
-# Ceratopsian artwork shipped by Debian's desktop-base (build-dependency).
-CERATOPSIAN := /usr/share/desktop-base/ceratopsian-theme
-PKG         := debian/tde-refresh-desktop-base-trinity
+include /usr/share/dpkg/pkg-info.mk
+
+# tde-refresh-desktop-base-trinity follows the default artwork of the Debian
+# release it is built on, taken from desktop-base (build-dependency). Newest
+# first: desktop-base keeps the themes of older releases.
+DESKTOP_BASE := /usr/share/desktop-base
+THEME ?= $(firstword $(foreach t,ceratopsian emerald,$(if $(wildcard $(DESKTOP_BASE)/$(t)-theme),$(t))))
+THEMEDIR := $(DESKTOP_BASE)/$(THEME)-theme
+PKG      := debian/tde-refresh-desktop-base-trinity
+THB      := debian/theme-build
+
+# Per theme: login background, kdesktop fallback gradient, and a version
+# suffix so that builds for an older release sort below the current one and
+# get their own file names.
+ifeq ($(THEME),ceratopsian)
+LOGIN_BG       := background.svg
+COLOR1         := 39,96,130
+COLOR2         := 36,64,80
+VERSION_SUFFIX :=
+else ifeq ($(THEME),emerald)
+# The logo in background.svg would sit behind the login box.
+LOGIN_BG       := background-nologo.svg
+COLOR1         := 5,79,96
+COLOR2         := 5,71,92
+VERSION_SUFFIX := ~bpo12+1
+endif
 
 # Windows 9x themes (Chicago95 artwork is vendored under win9x/chicago95).
 W9X    := debian/tde-refresh-win9x-trinity
@@ -23,10 +46,17 @@ endef
 	dh $@
 
 # Render the TDE wallpaper and TDM login background from desktop-base's SVGs,
-# so TDE matches the rest of the Debian trixie desktop.
+# so TDE matches the rest of the Debian desktop.
 override_dh_auto_build:
-	rsvg-convert -w 1920 -h 1200 $(CERATOPSIAN)/wallpaper/contents/images/1920x1200.svg -o wallpaper.png
-	rsvg-convert -w 1920 -h 1200 $(CERATOPSIAN)/login/background.svg -o tdm-background.png
+	@[ -n "$(LOGIN_BG)" ] && [ -d tde-theme/tdm/$(THEME) ] || \
+		{ echo "No supported desktop-base theme found (THEME='$(THEME)')" >&2; exit 1; }
+	mkdir -p $(THB)
+	rsvg-convert -w 1920 -h 1200 $(THEMEDIR)/wallpaper/contents/images/1920x1200.svg -o $(THB)/wallpaper.png
+	rsvg-convert -w 1920 -h 1200 $(THEMEDIR)/login/$(LOGIN_BG) -o $(THB)/background.png
+	for f in tde-theme/profile/share/config/kdesktoprc tde-theme/profile/share/config/ksplashrc tde-theme/tdm/backgroundrc; do \
+		sed -e 's|@THEME@|$(THEME)|g' -e 's|@COLOR1@|$(COLOR1)|' -e 's|@COLOR2@|$(COLOR2)|' \
+			$$f.in > $(THB)/$${f##*/}; \
+	done
 	# Win9x KSplash/TDM artwork is drawn as SVG, rendered here.
 	mkdir -p $(W9XB)
 	rsvg-convert win9x/ksplash/top.svg -o $(W9XB)/splash_top.png
@@ -47,8 +77,14 @@ override_dh_auto_build:
 	rsvg-convert macos/osx/desktop.svg -o $(MACB)/macosx-desktop.png
 
 override_dh_auto_install:
-	install -D -m 0644 wallpaper.png $(PKG)/usr/share/wallpapers/ceratopsian.png
-	install -D -m 0644 tdm-background.png $(PKG)/opt/trinity/share/apps/tdm/themes/ceratopsian/background.png
+	# tde-refresh-desktop-base-trinity
+	d=$(PKG)/$(TDEDIR)/share/apps; \
+	install -d $$d/tdm/themes/$(THEME) $$d/ksplash/Themes/$(THEME) $(PKG)/etc/trinity/tdm; \
+	install -m 0644 tde-theme/tdm/$(THEME)/* $(THB)/background.png $$d/tdm/themes/$(THEME)/; \
+	install -m 0644 tde-theme/ksplash/$(THEME)/* $$d/ksplash/Themes/$(THEME)/
+	install -D -m 0644 $(THB)/wallpaper.png $(PKG)/usr/share/wallpapers/$(THEME).png
+	install -m 0644 $(THB)/backgroundrc $(PKG)/etc/trinity/tdm/
+	install -m 0644 $(THB)/kdesktoprc $(THB)/ksplashrc tde-theme/profile/share/config/twinrc $(PKG)/etc/trinity/
 	install -D -m 0644 tde-theme/kompmgr/xcompmgrrc $(PKG)/etc/skel/.xcompmgrrc
 	install -D -m 0644 tde-theme/kompmgr/compton-tde.conf $(PKG)/etc/skel/.compton-tde.conf
 
@@ -98,6 +134,12 @@ override_dh_auto_install:
 		macos/osx/konqueror-toolbar.sed macos/osx/baghirarc \
 		$$d/$(TDEDIR)/share/apps/tde-refresh-macosx/
 
+# The maintainer scripts point tdmrc at the theme built here.
+override_dh_installdeb:
+	dh_installdeb -DTHEME=$(THEME)
+
+override_dh_gencontrol:
+	dh_gencontrol -- -v$(DEB_VERSION)$(VERSION_SUFFIX)
+
 override_dh_auto_clean:
-	rm -f wallpaper.png tdm-background.png
-	rm -rf $(W9XB) $(MACB)
+	rm -rf $(THB) $(W9XB) $(MACB)

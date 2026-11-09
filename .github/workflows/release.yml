@@ -1,7 +1,9 @@
 name: release
 
-# Build the .deb and publish it as a downloadable GitHub Release asset
-# whenever a version tag (e.g. v1.1) is pushed.
+# Build the .debs for each supported Debian release and publish them as
+# downloadable GitHub Release assets whenever a version tag (e.g. v1.1) is
+# pushed. The bookworm files carry ~bpo12+1 in their version, so the names
+# do not collide.
 on:
   push:
     tags:
@@ -12,9 +14,12 @@ permissions:
 
 jobs:
   release:
-    name: Build and publish .deb
+    name: Build and publish .deb (${{ matrix.suite }})
     runs-on: ubuntu-latest
-    container: debian:trixie
+    strategy:
+      matrix:
+        suite: [trixie, bookworm]
+    container: debian:${{ matrix.suite }}
     steps:
       - uses: actions/checkout@v7
 

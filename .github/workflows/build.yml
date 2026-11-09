@@ -6,9 +6,17 @@ on:
 
 jobs:
   build:
-    name: Build package
+    name: Build package (${{ matrix.suite }})
     runs-on: ubuntu-latest
-    container: debian:trixie
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: trixie
+            theme: ceratopsian
+          - suite: bookworm
+            theme: emerald
+    container: debian:${{ matrix.suite }}
     steps:
       - uses: actions/checkout@v7
 
@@ -27,28 +35,39 @@ jobs:
       - name: Lintian
         run: lintian out/*.changes
 
+      - name: Theme matches the release (${{ matrix.theme }})
+        run: |
+          dpkg-deb -c out/tde-refresh-desktop-base-trinity_*.deb \
+            | grep -q "tdm/themes/${{ matrix.theme }}/background.png"
+          dpkg-deb -c out/tde-refresh-desktop-base-trinity_*.deb \
+            | grep -q "usr/share/wallpapers/${{ matrix.theme }}.png"
+
       - uses: actions/upload-artifact@v7
         with:
-          name: deb
+          name: deb-${{ matrix.suite }}
           path: out/*.deb
 
   dep-check:
-    name: Dependencies resolve against TDE trixie repo
+    name: Dependencies resolve against TDE ${{ matrix.suite }} repo
     needs: build
     runs-on: ubuntu-latest
-    container: debian:trixie
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [trixie, bookworm]
+    container: debian:${{ matrix.suite }}
     steps:
       - uses: actions/download-artifact@v8
         with:
-          name: deb
+          name: deb-${{ matrix.suite }}
 
-      - name: Enable TDE trixie repository
+      - name: Enable TDE ${{ matrix.suite }} repository
         run: |
           apt-get update
           apt-get install -y --no-install-recommends wget ca-certificates
           wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb
           dpkg -i trinity-keyring.deb
-          echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-r14.1.x trixie main deps" \
+          echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-r14.1.x ${{ matrix.suite }} main deps" \
             > /etc/apt/sources.list.d/tde.list
           apt-get update
 

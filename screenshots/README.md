@@ -2,7 +2,8 @@
 
 Captured in a `debian:trixie` Docker container with the TDE trixie repo,
 `tde-refresh-desktop-base-trinity` installed, and TDE running on Xvfb
-(1280x800).
+(1280x800). They show the trixie build (Ceratopsian); the bookworm build
+(Emerald) has no screenshots yet.
 
 | File | What it shows |
 | --- | --- |

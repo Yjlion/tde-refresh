@@ -5,11 +5,13 @@ set -e
 # /opt/trinity/bin/tdm directly, so /etc/default/tdm-trinity.d is never read
 # and tdm-trinity's tdmrc keeps a placeholder theme. Replace that placeholder
 # (and only that: a tdmrc already changed by the admin or by the Control
-# Center Login Manager module is left alone) with the Ceratopsian theme.
-# If the theme is switched off, the classic greeter uses the Plastik style
-# and the Ceratopsian wallpaper from /etc/trinity/tdm/backgroundrc.
+# Center Login Manager module is left alone) with this package's theme
+# (#THEME# is filled in at build time: ceratopsian on trixie, emerald on
+# bookworm). If the theme is switched off, the classic greeter uses the
+# Plastik style and the same wallpaper from /etc/trinity/tdm/backgroundrc.
 TDMRC=/etc/trinity/tdm/tdmrc
-THEME=/opt/trinity/share/apps/tdm/themes/ceratopsian
+THEMES=/opt/trinity/share/apps/tdm/themes
+THEME=$THEMES/#THEME#
 PLACEHOLDER='@@@ToBeReplacedByDesktopBase@@@'
 
 case "$1" in
@@ -22,6 +24,14 @@ case "$1" in
                 -e 's|^#GUIStyle=Windows$|GUIStyle=Plastik|' \
                 "$TDMRC"
         fi
+        # After a release upgrade tdmrc still names the previous release's
+        # theme, which this package no longer ships.
+        for old in ceratopsian emerald; do
+            if [ "$THEMES/$old" != "$THEME" ] && [ ! -d "$THEMES/$old" ] &&
+               [ -f "$TDMRC" ] && grep -q "^Theme=$THEMES/$old\$" "$TDMRC"; then
+                sed -i "s|^Theme=$THEMES/$old\$|Theme=$THEME|" "$TDMRC"
+            fi
+        done
         ;;
 esac
 
