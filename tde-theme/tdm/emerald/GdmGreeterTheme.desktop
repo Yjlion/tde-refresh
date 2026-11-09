@@ -1,0 +1,8 @@
+[GdmGreeterTheme]
+Encoding=UTF-8
+Greeter=emerald.xml
+Name=Emerald
+Description=Emerald TDM Theme, using the Debian 12 (bookworm) Emerald artwork by Juliette Taka
+Author=tde-refresh, layout based on the MoreBlue Orbit KDM theme by Fathi Boudra
+Copyright=(c) 2008 Fathi Boudra <fabo@debian.org>, Debian Desktop Team
+Screenshot=screenshot.png

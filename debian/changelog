@@ -1,3 +1,16 @@
+tde-refresh-trinity (1.10) trixie; urgency=medium
+
+  * Build on Debian 12 (bookworm) as well as trixie, from the same source.
+    Packages built on bookworm get the version suffix ~bpo12+1.
+  * desktop-base-trinity: follow the default artwork of the release it is
+    built on. debian/rules picks the newest desktop-base theme it knows:
+    Ceratopsian on trixie, Emerald on bookworm (new KSplash and TDM themes).
+  * desktop-base-trinity: after a release upgrade, postinst moves tdmrc from
+    the previous release's theme to the new one.
+  * Lower the desktop-base requirement to >= 12.
+
+ -- yjlion <yjlion@gmail.com>  Mon, 09 Nov 2026 12:00:00 -0500
+
 tde-refresh-trinity (1.9) trixie; urgency=medium
 
   * macclassic-trinity: replace the panel under the global menu bar with one

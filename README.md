@@ -1,8 +1,8 @@
 # tde-refresh-trinity
 
 A custom, independent Debian metapackage for the [Trinity Desktop
-Environment](https://trinitydesktop.org/) (TDE), targeting Debian trixie and
-TDE R14.1.7.
+Environment](https://trinitydesktop.org/) (TDE), targeting Debian 13 (trixie) and
+Debian 12 (bookworm) with TDE R14.1.7.
 
 ## Why not just use `tde-trinity`?
 
@@ -36,26 +36,34 @@ installs a complete TDE desktop while:
   `Recommends` are still installed by default by apt, but can be removed
   without removing the metapackage.
 
-## `tde-refresh-desktop-base-trinity` (Ceratopsian theme)
+## `tde-refresh-desktop-base-trinity` (Debian default theme)
 
 The stock `desktop-base-trinity` is a Debian 5/6-era fork of `desktop-base`:
 it conflicts with (and replaces) the real `desktop-base`, ships MoreBlue/Nightly
 artwork and has no Plymouth theme. This repo's second binary package,
 `tde-refresh-desktop-base-trinity`, instead **depends on Debian's
-`desktop-base`** and adds only the TDE pieces, re-skinned with the trixie
-**Ceratopsian** artwork (the same theme as the Plymouth boot splash):
+`desktop-base`** and adds only the TDE pieces, re-skinned with the default artwork of the Debian
+release it is built for (the same theme as the Plymouth boot splash):
+
+| Built on | Theme | Package version |
+| --- | --- | --- |
+| Debian 13 (trixie) | **Ceratopsian** | `1.10` |
+| Debian 12 (bookworm) | **Emerald** | `1.10~bpo12+1` |
 
 - default TDE wallpaper and system-wide profile (`/etc/trinity/{kdesktoprc,ksplashrc,twinrc}`)
-- KSplash theme `ceratopsian`
-- TDM login theme `ceratopsian`
+- KSplash theme `ceratopsian` or `emerald`
+- TDM login theme `ceratopsian` or `emerald`
 - kompmgr/`compton-tde` compositor settings in `/etc/skel`
 
 The wallpaper and login background are rendered at build time from
-desktop-base's own SVGs. On install the package makes `tdmrc` use the
-Ceratopsian login theme (only if it still holds the stock placeholder theme, so
+desktop-base's own SVGs. `debian/rules` uses the newest theme it knows among
+those in `/usr/share/desktop-base` (`THEME=emerald` on the make command line
+overrides it). On install the package makes `tdmrc` use that
+login theme (only if it still holds the stock placeholder theme, so
 a theme picked in the Login Manager module is never overwritten); removing the
-package restores the placeholder. Without the theme, the classic greeter uses the
-Plastik style and the Ceratopsian wallpaper. `tde-refresh-trinity` recommends it in place of
+package restores the placeholder. After an upgrade from bookworm to trixie the
+login theme moves from Emerald to Ceratopsian. Without the theme, the classic greeter uses the
+Plastik style and the same wallpaper. `tde-refresh-trinity` recommends it in place of
 `desktop-base-trinity`. See `screenshots/`.
 
 ## `tde-refresh-win9x-trinity` (Windows 9x themes)
@@ -73,7 +81,7 @@ activated on install). It adds two themes to the **TDE Theme Manager**
 Also installed: Chicago95 GTK2/GTK3/GTK4 themes (`/usr/share/themes`), wallpapers
 and patterns (`/usr/share/wallpapers/Chicago95`), `chicago95` KSplash and TDM
 themes (pick them in the Splash Screen and Login Manager modules), the
-RetroTux Plymouth theme (inactive; Ceratopsian stays the default), and
+RetroTux Plymouth theme (inactive; Debian's own theme stays the default), and
 `tde-win9x-panel`, which gives the panel a labelled **Start** button (the Theme
 Manager cannot set that; run `tde-win9x-panel revert` to undo) and
 `tde-win9x-tdm` (run as root), which gives the classic, unthemed TDM login
@@ -129,7 +137,8 @@ TDE's own. See `screenshots/`.
 The packages are built on the [Open Build
 Service](https://build.opensuse.org/package/show/home:yjlion/tde-refresh) for
 Debian 13 (trixie), `amd64`. The metapackages depend on TDE packages, so enable
-the TDE trixie repository as well as this one.
+the TDE trixie repository as well as this one. For Debian 12 (bookworm) see
+[Debian 12 (bookworm)](#debian-12-bookworm) below.
 
 ```bash
 sudo apt install curl gnupg ca-certificates
@@ -166,16 +175,36 @@ The optional looks are separate packages: `tde-refresh-desktop-base-trinity`,
 `tde-refresh-win9x-trinity`, `tde-refresh-macclassic-trinity` and
 `tde-refresh-macosx-trinity`.
 
+## Debian 12 (bookworm)
+
+The OBS project has no Debian 12 repository yet. Take the `*~bpo12+1_all.deb`
+files from the [GitHub releases](https://github.com/Yjlion/tde-refresh/releases)
+or build them on bookworm (see below). Enable the TDE bookworm repository first:
+
+```bash
+curl -fsSLO http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb
+sudo dpkg -i trinity-keyring.deb
+echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-r14.1.x bookworm main deps" |
+  sudo tee /etc/apt/sources.list.d/tde.list
+sudo apt update
+sudo apt install ./tde-refresh-trinity_*~bpo12+1_all.deb ./tde-refresh-desktop-base-trinity_*~bpo12+1_all.deb
+```
+
 ## Building
 
 ```
+sudo apt install build-essential debhelper desktop-base librsvg2-bin fonts-dejavu-core
 dpkg-buildpackage -us -uc
 ```
 
+The same source builds on trixie and bookworm; the release you build on decides
+the theme and the version suffix.
+
 ## Known caveats
 
-Every dependency name has been checked against the TDE R14.1.7 trixie archive and
-Debian trixie. The CI workflow in `.github/workflows/build.yml` dry-run installs
-the built packages against the live TDE trixie apt repository, so a green build
+Every dependency name has been checked against the TDE R14.1.7 trixie and
+bookworm archives and Debian trixie and bookworm. The CI workflow in
+`.github/workflows/build.yml` builds on both releases and dry-run installs
+the built packages against the live TDE apt repository for each, so a green build
 means every dependency name still resolves. If a name stops resolving, update
 `debian/control` accordingly.

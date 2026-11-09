@@ -1,11 +1,11 @@
 [Desktop0]
-BackgroundMode=VerticalGradient
+BackgroundMode=Flat
 BlendBalance=100
 BlendMode=NoBlending
 ChangeInterval=60
-Color1=39,96,130
-Color2=36,64,80
-CurrentWallpaper=0
+Color1=0,0,0
+Color2=0,0,0
+CurrentWallpaperName=
 LastChange=0
 MinOptimizationDepth=1
 MultiWallpaperMode=NoMulti
@@ -13,6 +13,6 @@ Pattern=
 Program=
 ReverseBlending=false
 UseSHM=false
-Wallpaper=/usr/share/wallpapers/ceratopsian.png
+Wallpaper=/opt/trinity/share/apps/tdm/themes/@THEME@/background.png
 WallpaperList=
 WallpaperMode=Scaled

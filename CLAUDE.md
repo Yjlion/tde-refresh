@@ -6,7 +6,7 @@ Guidance for AI assistants (and humans) working in this repository.
 
 `tde-refresh` builds a Debian **metapackage**, `tde-refresh-trinity`: a curated,
 self-contained way to install the [Trinity Desktop Environment](https://trinitydesktop.org/)
-(TDE) R14.1.7 on Debian **trixie**. A metapackage ships no real content of its own
+(TDE) R14.1.7 on Debian **trixie** and **bookworm** (same source, built on each). A metapackage ships no real content of its own
 — it is just a package whose `Depends`/`Recommends`/`Suggests` fields pull in the
 set of TDE packages we consider a good default desktop.
 
@@ -49,7 +49,7 @@ The rationale is documented in more detail in `README.md`.
 │   ├── copyright             # DEP-5 copyright/licensing (GPL-2+)
 │   ├── rules                 # Build recipe — renders artwork, installs the themes
 │   └── source/format         # "3.0 (native)" — native package, no separate orig tarball
-├── tde-theme/                # Ceratopsian theme data
+├── tde-theme/                # desktop-base theme data: ceratopsian (trixie), emerald (bookworm)
 ├── win9x/                    # Windows 9x theme data and helpers
 ├── macos/                    # Mac OS Classic and Mac OS X theme data
 │   ├── bin/tde-mac-theme.in  # Template for tde-macclassic and tde-macosx
@@ -86,7 +86,7 @@ Almost every change to this repo is an edit to the dependency lists in
   Both of those were corrected to `-trinity`/`-trinity` in the git history —
   see commits `25f6c82` and `de313d8`.
 - Verify any new/changed dependency name resolves against the live TDE trixie
-  apt repo. The CI `dep-check` job does exactly this; a green build means every
+  and bookworm apt repos. The CI `dep-check` job does exactly this; a green build means every
   name resolves.
 - Keep the `Description:` in `debian/control` and the summary in `README.md`
   roughly in sync when you add/remove notable dependencies.
@@ -121,14 +121,15 @@ see the CI `dep-check` job for how it's added.
 
 ## CI (`.github/workflows/build.yml`)
 
-Runs on every `push` and `pull_request`, in a `debian:trixie` container, in two
-jobs:
+Runs on every `push` and `pull_request`, once per suite (`debian:trixie` and
+`debian:bookworm` containers), in two jobs:
 
 1. **`build`** — installs the build tools listed above, runs
    `dpkg-buildpackage -us -uc`, moves artifacts into `out/`, runs `lintian`,
-   and uploads the `.deb` as an artifact.
+   checks that the desktop-base package holds the suite's theme, and uploads
+   the `.deb`s as artifact `deb-<suite>`.
 2. **`dep-check`** (needs `build`) — downloads the artifact, enables the TDE
-   trixie apt repo (installs `trinity-keyring`, adds the sources list), and runs
+   apt repo for the suite (installs `trinity-keyring`, adds the sources list), and runs
    `apt-get install -s ./tde-refresh-*_all.deb` (a `-s` **simulate**).
    This is the real gate on dependency-name correctness: if any name in
    `debian/control` doesn't resolve, this job fails.
@@ -147,6 +148,24 @@ mistakes. `lintian` in the `build` job catches packaging-metadata problems.
   and clear/adjust any stale entries in the README "Known caveats" section.
 - `debian/rules` overrides exist to render and install theme artwork. Don't add
   more unless a package genuinely needs them.
+
+## Release themes (`tde-refresh-desktop-base-trinity`)
+
+- `debian/rules` picks `THEME` from the themes present in
+  `/usr/share/desktop-base`, newest first (`ceratopsian`, then `emerald`):
+  trixie's desktop-base still ships `emerald-theme`, so order matters.
+- The theme sets the installed paths, the `@THEME@`/`@COLOR1@`/`@COLOR2@`
+  placeholders in `kdesktoprc.in`, `ksplashrc.in` and `backgroundrc.in`, the
+  `#THEME#` token in postinst/postrm, and the version suffix (`~bpo12+1` on
+  bookworm, none on the newest release).
+- To add a release: generate `tde-theme/ksplash/NAME` and `tde-theme/tdm/NAME`
+  with `tde-theme/make-theme-art.py` (see its docstring), look at the PNGs, add
+  `Theme.rc`, `GdmGreeterTheme.desktop` and `NAME.xml` by copying an existing
+  theme, add a block for NAME in `debian/rules` (first in the detection list,
+  and move the version suffixes down one release), add NAME to the `for old in`
+  loop in postinst, and add a matrix entry in both workflows.
+- The changelog distribution stays `trixie`; the bookworm build only differs
+  through the detection above.
 
 ## Mac theme notes
 
@@ -170,4 +189,4 @@ mistakes. `lintian` in the `build` job catches packaging-metadata problems.
   request (see the merge commits in `git log`).
 - Do not commit build output. Commit only the tracked packaging/doc files.
 - Trust CI's `dep-check` over local reasoning for whether a dependency name is
-  correct against the trixie archive.
+  correct against the trixie and bookworm archives.

@@ -4,8 +4,7 @@
 /debian/files
 /debian/debhelper-build-stamp
 /out/
-/wallpaper.png
-/tdm-background.png
+/debian/theme-build/
 /debian/win9x-build/
 /debian/mac-build/
 /debian/*.debhelper
